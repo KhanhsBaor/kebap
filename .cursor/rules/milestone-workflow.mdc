@@ -1,0 +1,14 @@
+---
+description: Quy trình thực hiện một milestone trong docs/milestones. Dùng khi người dùng yêu cầu làm hoặc tiếp tục một milestone.
+alwaysApply: false
+---
+
+# Milestone workflow
+
+1. Đọc `docs/ROADMAP.md` và file milestone được yêu cầu trong `docs/milestones/`.
+2. Lập kế hoạch ngắn trước khi code; chờ đồng ý nếu thay đổi lớn hoặc lệch docs.
+3. Chỉ làm trong phạm vi milestone; không lan sang milestone khác.
+4. Giữ Clean Architecture (xem `flutter-clean-architecture-core.mdc`).
+5. Tick từng task trong checklist khi xong.
+6. Cuối milestone: `flutter analyze` + `flutter test`, cập nhật trạng thái trong `docs/ROADMAP.md`, dừng chờ review.
+7. Nếu yêu cầu mơ hồ hoặc mâu thuẫn với docs / `memory/decisions.md`, hỏi lại thay vì tự đoán.

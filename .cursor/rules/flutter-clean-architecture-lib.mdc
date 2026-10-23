@@ -1,0 +1,105 @@
+---
+description: Kebap lib/ — feature layers, Riverpod wiring, Drift boundary, naming, tests
+globs: lib/**
+alwaysApply: false
+---
+
+# Kebap — `lib/` conventions
+
+Package `kebap`. Import mới: `package:kebap/...`.
+
+## Feature layout
+
+```text
+lib/features/<feature>/
+  domain/
+    entities/          # freezed domain models
+    repositories/      # abstract contracts
+    usecases/          # optional — complex / reusable logic
+  data/
+    repositories/      # *RepositoryImpl implements contract
+    # mappers nếu cần (Drift row → entity)
+  presentation/
+    screens/ | widgets/
+    providers/         # @riverpod / Notifier / Stream
+```
+
+Shared infra: `lib/core/db/`, `lib/core/router/`, `lib/core/theme/`.
+
+## Domain
+
+```dart
+// entity — pure Dart / freezed
+@freezed
+class WorkoutSession with _$WorkoutSession {
+  const factory WorkoutSession({required String id, ...}) = _WorkoutSession;
+}
+
+// contract
+abstract class WorkoutRepository {
+  Stream<List<WorkoutSession>> watchRecent();
+  Future<void> saveSet(...);
+}
+
+// use case — pure, testable không Flutter
+class CompareSessions {
+  const CompareSessions();
+  SessionDiff call(WorkoutSession current, WorkoutSession previous) { ... }
+}
+```
+
+## Data
+
+- Repository impl inject DAO / `AppDatabase`, map sang domain entity.
+- Truy vấn đặc thù (vd. "buổi gần nhất cùng nhóm cơ") nằm trong **DAO**, không rải ở UI.
+- Không trả Drift row ra ngoài data layer.
+
+```dart
+class WorkoutRepositoryImpl implements WorkoutRepository {
+  WorkoutRepositoryImpl(this._dao);
+  final WorkoutDao _dao;
+
+  @override
+  Stream<List<WorkoutSession>> watchRecent() =>
+      _dao.watchRecent().map((rows) => rows.map(WorkoutMapper.toEntity).toList());
+}
+```
+
+## Presentation + Riverpod
+
+- Provider mới dùng `riverpod_generator` (`@riverpod`).
+- Wire graph tường minh: db → dao → repository → (use case) → UI provider.
+- Đọc: `StreamProvider` / generated stream trên `repository.watch*()`.
+- Ghi: method trên `Notifier` / repository; UI không gọi DAO.
+- State UI tạm (focus, animation): hooks/`StatefulWidget` local — không nhét vào domain.
+
+```dart
+@riverpod
+WorkoutRepository workoutRepository(Ref ref) {
+  return WorkoutRepositoryImpl(ref.watch(workoutDaoProvider));
+}
+
+@riverpod
+Stream<List<WorkoutSession>> recentWorkouts(Ref ref) {
+  return ref.watch(workoutRepositoryProvider).watchRecent();
+}
+```
+
+## Naming
+
+| Thứ | Quy ước |
+|-----|---------|
+| File | `snake_case.dart` |
+| Entity | `PascalCase` freezed |
+| Contract | `FooRepository` |
+| Impl | `FooRepositoryImpl` |
+| Use case | verb/noun rõ nghĩa (`CompareSessions`, `CalculateOneRepMax`) |
+| Screen | `*_screen.dart` / `*Screen` |
+
+## Test
+
+- Domain calculators / use cases: unit test thuần Dart trong `test/`.
+- Volume / 1RM / so sánh / chart metrics: bám `docs/03-calculation-rules.md` và `.cursor/rules/calculation-rules.mdc`.
+- DAO: `NativeDatabase.memory()`.
+- Đổi schema Drift: migration + test migration bắt buộc.
+- Không đặt test cạnh file `lib/`.

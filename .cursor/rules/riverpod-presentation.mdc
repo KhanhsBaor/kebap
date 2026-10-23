@@ -1,0 +1,14 @@
+---
+description: Quy tắc Riverpod và UI cho các màn hình feature
+globs: lib/features/**/presentation/**/*.dart
+alwaysApply: false
+---
+
+# Presentation — Riverpod
+
+- Provider mới: `riverpod_generator` (`@riverpod`). Riverpod chỉ DI + state, không chứa business rules nặng.
+- Đọc: StreamProvider / generated stream trên `repository.watch*()` (Drift phía dưới).
+- Ghi: notifier/command → repository; **không** gọi DAO / import Drift generated.
+- Không `setState` cho state nghiệp vụ; state UI tạm dùng flutter_hooks / local State.
+- Luồng "đang tập": nhập nhanh, ít chạm — không thêm bước thừa.
+- Chi tiết layer: `.cursor/rules/flutter-clean-architecture-lib.mdc`.

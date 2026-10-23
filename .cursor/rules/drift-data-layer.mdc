@@ -1,0 +1,14 @@
+---
+description: Quy tắc Drift tables, DAO, repository (data layer)
+globs: lib/core/db/**/*.dart,lib/features/**/data/**/*.dart
+alwaysApply: false
+---
+
+# Data — Drift
+
+- Table trong `core/db/tables/`; mỗi DAO một file.
+- Truy vấn "buổi gần nhất cùng nhóm cơ" nằm trong DAO, không viết rải ở UI.
+- Repository **implement** contract domain; trả domain entity — không lộ class generated của Drift.
+- Đổi schema: kèm migration + test migration.
+- Test DAO bằng `NativeDatabase.memory()`.
+- Chi tiết layer: `.cursor/rules/flutter-clean-architecture-lib.mdc`.

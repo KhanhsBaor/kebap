@@ -1,0 +1,47 @@
+---
+description: Kebap — Clean Architecture + Riverpod (feature-first), dependency direction, offline-first
+alwaysApply: true
+---
+
+# Kebap — Clean Architecture core
+
+App **Kebap**: nhật ký tập luyện offline-first. Package `kebap`. Import `package:kebap/...`.
+
+**Core value:** so sánh buổi tập để thấy progressive overload. Mọi quyết định ưu tiên core này.
+
+## Dependency direction (bắt buộc)
+
+```
+presentation → domain ← data
+```
+
+- **Domain** không import Flutter, Riverpod, Drift, HTTP.
+- **Data** implement contract của Domain; biết Drift/DAO/serialization.
+- **Presentation** chỉ Riverpod + UI; không business rules nặng, không class generated của Drift.
+- Riverpod = DI + state coordinator, **không** phải nơi chứa logic nghiệp vụ.
+
+## Canonical `lib/` (feature-first)
+
+| Folder | Mục đích |
+|--------|----------|
+| `features/<feature>/domain/` | Entity (freezed), repository **abstract**, use case / pure calculators |
+| `features/<feature>/data/` | Repository impl, map Drift row ↔ entity |
+| `features/<feature>/presentation/` | Screens, widgets, `@riverpod` providers / notifiers |
+| `core/` | Drift DB (tables, DAOs, migrations), router, theme, utils dùng chung |
+
+Luồng đọc offline: **UI ← StreamProvider ← repository.watch*() ← Drift stream**.  
+Luồng ghi: **UI → notifier/command → repository → DAO**.
+
+## Use case: khi nào tạo
+
+- **Có use case / domain function:** logic phức tạp hoặc tái dùng (1RM, volume, so sánh buổi tập, progressive overload). Công thức: `docs/03-calculation-rules.md`.
+- **Không bắt buộc:** CRUD mỏng — presentation gọi repository (qua provider) trực tiếp.
+
+## Không làm
+
+- UI import `*.drift.dart` / table row generated.
+- Domain phụ thuộc framework hoặc package UI.
+- `setState` cho state nghiệp vụ.
+- Thêm bước thừa vào luồng "đang tập" (ưu tiên ít chạm).
+
+Chi tiết khi sửa Dart: `.cursor/rules/flutter-clean-architecture-lib.mdc`.

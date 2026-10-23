@@ -1,0 +1,39 @@
+---
+description: Công thức volume / 1RM / so sánh / chart — nguồn sự thật docs/03
+globs: lib/features/**/domain/**/*.dart,test/**/*calculat*,test/**/*volume*,test/**/*1rm*,test/**/*compare*,docs/03-calculation-rules.md,docs/calculations.md
+alwaysApply: false
+---
+
+# Kebap — Quy tắc tính toán
+
+## Nguồn sự thật
+
+- **Chính thức:** `docs/03-calculation-rules.md` (mọi công thức, ngưỡng, set hợp lệ, mapping chart).
+- **Quy tắc agent ngắn:** `docs/calculations.md`.
+- Không tự bịa / đổi công thức trong code. Đổi → sửa `03` + dòng Lịch sử thay đổi **trước**, rồi code + test.
+- Code mâu thuẫn với `03` → **dừng và hỏi người dùng**, không tự chọn một bên.
+
+## Chỗ đặt code
+
+- Dart thuần trong `lib/features/<feature>/domain/` (vd. `calculations/`).
+- Không import Flutter, Riverpod, Drift trong hàm tính.
+- Unit test bắt buộc; dùng đúng ví dụ trong `03` (vd. Bench 60×10, 60×10, 60×8 → volume bài = 1680).
+- Tên tham chiếu: `setVolume`, `exerciseVolume`, `sessionVolume`, `estimated1RM`, `weeklySetCount` (+ use case so sánh riêng).
+
+## Tóm tắt bắt buộc (chi tiết trong `03`)
+
+| Chủ đề | Quy tắc |
+|--------|---------|
+| Load volume (set/bài/buổi) | `kg × reps`; cộng set **hợp lệ**; warmup loại; thiếu kg/reps → bỏ qua (không tính 0) |
+| Set volume (nhóm cơ) | Số **working set** trong 7 ngày |
+| 1RM (Epley) | `reps == 1 → kg`; else `kg × (1 + reps/30)`; **chỉ** set `reps ≤ 10`; mỗi bài/buổi lấy 1RM cao nhất cho chart |
+| Đơn vị | Lưu DB **kg**; lb chỉ khi hiển thị |
+| Bodyweight (`kg = 0`) | MVP: dùng reps làm chỉ số riêng (không nhồi vào load volume như tạ) |
+| So sánh 2 buổi | Buổi gần nhất cùng nhóm cơ (hoặc split day), ngày **trước** buổi hiện tại; **theo từng bài** có ở cả hai: load volume + 1RM cao nhất; tăng / giữ / giảm; giữ nếu \|Δ\| ≤ **2%** |
+| Chart | Theo bảng mapping mục 6 trong `03` — không tự đổi metric mặc định |
+
+## Việc không làm
+
+- Không tính warmup vào volume / 1RM.
+- Không dùng reps > 10 cho `estimated1RM`.
+- Không đặt công thức trong presentation / DAO (DAO chỉ lấy dữ liệu; domain tính).
