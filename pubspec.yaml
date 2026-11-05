@@ -72,6 +72,8 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+  assets:
+    - seed/exercises.csv
   fonts:
     - family: Barlow
       fonts:
