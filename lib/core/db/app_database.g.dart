@@ -2481,6 +2481,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     'workouts_one_in_progress',
     'CREATE UNIQUE INDEX workouts_one_in_progress ON workouts (status) WHERE status = \'in_progress\'',
   );
+  late final CatalogDao catalogDao = CatalogDao(this as AppDatabase);
+  late final WorkoutDao workoutDao = WorkoutDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();

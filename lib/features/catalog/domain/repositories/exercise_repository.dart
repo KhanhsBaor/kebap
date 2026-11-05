@@ -13,11 +13,16 @@ abstract class ExerciseRepository {
     required String name,
   });
 
+  /// Inserts one exercise and returns it with the assigned id.
+  ///
+  /// [isCustom] is required so a seed row is not created by omitting the flag.
+  /// Seed rows pass `isCustom: false` and a non-null [equipment]. Custom rows
+  /// pass `isCustom: true` and leave [equipment] null.
   Future<Exercise> insert({
     required int muscleGroupId,
     required String nameEn,
     String? nameVi,
-    bool isCustom = false,
+    required bool isCustom,
     String? sourceId,
     ExerciseEquipment? equipment,
   });

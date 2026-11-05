@@ -46,7 +46,7 @@ Hoàn thành **luồng đang tập** tối thiểu — trái tim nhật ký.
 - [x] Schema Drift: `muscle_groups` (+ region), `exercises` (`muscleGroupId`, `isCustom`, `sourceId` nullable, `equipment` enum bắt buộc với bài seed, để trống với custom — `docs/04`), `workouts`, `workout_muscle_groups` (bảng nối, buổi ↔ nhiều nhóm), `workout_exercises`, `sets`. Schema v1 đã đủ — không cần migration.
 - [x] Domain entities (freezed) + repository contracts — region / muscle group / exercise / workout / set
 - [x] Seed region + đủ muscle groups theo `01`; import các dòng trong `seed/exercises.csv` đã có `kebapMuscleGroup`, `kebapEquipment` và `nameVi` (bài seed: `equipment` không null, tên EN + VI)
-- [ ] Data: repository impl + mapper Drift ↔ entity
+- [x] Data: repository impl + mapper Drift ↔ entity
 - [ ] Use case/command: start workout, add exercise, **createCustomExercise(name, muscleGroupId)**, log/update set, finish workout
 - [ ] Providers/notifiers Riverpod cho phiên đang tập (không nhét business nặng vào notifier)
 - [ ] UI: start — chọn **Upper body / Lower body / Other** → chọn một hoặc nhiều muscle group

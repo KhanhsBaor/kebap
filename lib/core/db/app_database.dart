@@ -1,6 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/services.dart';
 import 'package:kebap/core/db/converters/workout_status_converter.dart';
+import 'package:kebap/core/db/daos/catalog_dao.dart';
+import 'package:kebap/core/db/daos/workout_dao.dart';
 import 'package:kebap/core/db/db_enums.dart';
 import 'package:kebap/core/db/seed/catalog_seeder.dart';
 import 'package:kebap/core/db/tables/exercises_table.dart';
@@ -23,6 +25,7 @@ part 'app_database.g.dart';
     WorkoutExercises,
     WorkoutSets,
   ],
+  daos: [CatalogDao, WorkoutDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(
