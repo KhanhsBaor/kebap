@@ -77,6 +77,11 @@ void main() {
           ),
         );
 
+    final storedWorkout = await (database.select(
+      database.workouts,
+    )..where((row) => row.id.equals(workoutId))).getSingle();
+    expect(storedWorkout.status, WorkoutStatus.inProgress);
+
     final stored = await (database.select(
       database.workoutSets,
     )..where((row) => row.id.equals(setId))).getSingle();

@@ -4,6 +4,7 @@ INDEX — mới nhất ở trên. Khi file vượt ~300 dòng, chuyển entry c�
 
 | Date | Tiêu đề |
 |------|---------|
+| 2026-11-05 | M2: không thêm bài ngoài buổi; custom gắn nhóm đang xem; trùng tên thì chặn |
 | 2026-11-05 | M1: CI GitHub Actions, schema v1, iOS simulator, l10n EN/VI |
 | 2026-11-05 | Seed ExerciseGymGifsDB; giao diện tiếng Anh và tiếng Việt |
 | 2026-11-04 | Hệ UI: nhật ký thể thao, sáng và tối theo hệ thống |
@@ -20,6 +21,10 @@ INDEX — mới nhất ở trên. Khi file vượt ~300 dòng, chuyển entry c�
 | 2026-10-23 | Offline-first Drift; UI không đụng Drift generated |
 
 ---
+
+### [2026-11-05] M2: không thêm bài ngoài buổi; custom gắn nhóm đang xem; trùng tên thì chặn
+
+**Context:** M2 còn mở việc thêm bài ngoài nhóm của buổi, chọn nhóm khi tạo custom, trùng tên với bài có sẵn, và sửa/xóa custom. **Decision:** Không cho thêm bài nằm ngoài các nhóm cơ của buổi, để ít chạm. Custom exercise mặc định gắn nhóm đang xem; buổi nhiều nhóm có chip để đổi sang nhóm khác của buổi. Tên trùng y hệt (không phân biệt hoa thường) với một bài trong cùng nhóm thì chặn và gợi ý dùng bài có sẵn. Sửa hoặc xóa custom exercise thuộc M6.
 
 ### [2026-11-05] M1: CI GitHub Actions, schema v1, iOS simulator, l10n EN/VI
 
