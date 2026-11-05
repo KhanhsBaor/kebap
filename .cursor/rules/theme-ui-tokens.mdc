@@ -1,0 +1,18 @@
+---
+description: Theme và token giao diện Kebap — nguồn sự thật docs/07-ui-system.md
+globs: lib/core/theme/**/*.dart,lib/features/**/presentation/**/*.dart
+alwaysApply: false
+---
+
+# UI — Theme và token
+
+- Nguồn sự thật: `docs/07-ui-system.md`. Mâu thuẫn code ↔ docs/07 → hỏi user, không tự chọn.
+- Token sống trong `lib/core/theme/`: màu (sáng/tối), spacing (xs 4, sm 8, md 16, lg 24, xl 32), radius (8 ô số/chip, 12 thẻ/nút/sheet), text styles.
+- Expose token qua `ThemeData` + `ThemeExtension` (vd. `KebapColors`, `KebapSpacing`). Widget lấy qua `Theme.of(context)`; **không hard-code hex / số dp trong màn**.
+- `MaterialApp` có đủ `theme` + `darkTheme`, `themeMode: ThemeMode.system`. Không để Material 3 mặc định (seed color) đè token đã chốt.
+- Cam `#F97316` chỉ cho nút chính và đường 1RM. Trend tăng/giữ/giảm luôn kèm nhãn chữ; màu không phải tín hiệu duy nhất.
+- Font Barlow / Barlow Condensed **bundle trong assets** (app offline) — không dùng `google_fonts` tải runtime. Số dùng `FontFeature.tabularFigures()`.
+- Không bo viên thuốc, không bóng đổ (elevation 0); phân cấp bằng surface + viền 1 dp.
+- Icon Material Symbols outline, 24 dp; nút chỉ icon có vùng chạm 48 dp + `Semantics`/`tooltip`.
+- Nhấn nút: đổi opacity 100–150 ms, không animate layout.
+- Kiểm tra cả hai theme và text scale lớn khi thêm widget.

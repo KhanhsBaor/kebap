@@ -1,0 +1,18 @@
+{
+  "@@locale": "en",
+  "todayLabel": "Today",
+  "@todayLabel": {
+    "description": "Tab and screen title for Today"
+  },
+  "progressLabel": "Progress",
+  "@progressLabel": {
+    "description": "Tab and screen title for Progress"
+  },
+  "historyLabel": "History",
+  "@historyLabel": {
+    "description": "Tab and screen title for History"
+  },
+  "todayEmpty": "No workout yet.",
+  "progressEmpty": "Charts will appear after a completed workout.",
+  "historyEmpty": "Completed workouts will show up here."
+}

@@ -1,0 +1,15 @@
+---
+description: go_router — shell 3 tab và route full-screen
+globs: lib/core/router/**/*.dart,lib/main.dart,lib/app.dart
+alwaysApply: false
+---
+
+# Router — go_router
+
+- Router khai báo ở `lib/core/router/`, expose qua provider Riverpod (`@Riverpod(keepAlive: true) GoRouter router(Ref ref)`); `MaterialApp.router(routerConfig: ...)`.
+- Tab dưới: `StatefulShellRoute.indexedStack` với 3 branch theo `docs/design/screens.md`: Hôm nay (S01), Tiến trình (S02), Lịch sử (S03). Giữ state từng tab.
+- Màn đang tập và các màn full-screen khác đặt **ngoài** shell (dùng `parentNavigatorKey` của root navigator) để ẩn bottom bar.
+- Path / name route là hằng trong một file (vd. `app_routes.dart`); không viết chuỗi path rải rác trong màn.
+- Màn feature không import nhau để điều hướng — dùng `context.go/push` với route name.
+- Redirect (khảo sát lần đầu M7, …) chỉ thêm khi milestone yêu cầu.
+- Test: widget test bấm chuyển tab, kiểm tra route hiện tại.

@@ -1,0 +1,13 @@
+---
+description: Đa ngôn ngữ EN / VI cho chuỗi giao diện
+globs: lib/l10n/**,l10n.yaml,lib/features/**/presentation/**/*.dart
+alwaysApply: false
+---
+
+# Localization (EN / VI)
+
+- App có cả tiếng Anh và tiếng Việt (decision 2026-11-05). Dùng `flutter_localizations` + `intl` + `gen-l10n` (skill `flutter-setup-localization`).
+- ARB ở `lib/l10n/app_en.arb` (template) và `app_vi.arb`. Mọi chuỗi hiển thị đi qua `AppLocalizations`; không hard-code chuỗi trong widget.
+- Copy tiếng Việt lấy đúng từ spec (`docs/07`, `docs/design/screens.md`); bản tiếng Anh dịch sát nghĩa, chỗ nào chưa chắc → ghi chú hỏi user.
+- Tên region / nhóm cơ / bài là dữ liệu (seed `nameEn`/`nameVi`), không đưa vào ARB.
+- Locale mặc định theo hệ thống; fallback `en`.

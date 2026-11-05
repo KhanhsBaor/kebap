@@ -11,7 +11,7 @@ Chi tiết từng milestone: `docs/milestones/`.
 | ID | Tên | Mục tiêu | Phụ thuộc | Trạng thái |
 |----|-----|----------|-----------|------------|
 | M0 | Agent docs + kiến trúc | Rules, `AGENTS.md`, Clean Architecture + Riverpod/Drift đã chốt trên giấy | — | done |
-| M1 | Khung dự án | App chạy được: thư mục feature-first, Drift shell, go_router, theme, Riverpod root, CI analyze/test | M0 | todo |
+| M1 | Khung dự án | App chạy được: thư mục feature-first, Drift shell, go_router, theme, Riverpod root, CI analyze/test | M0 | done |
 | M2 | Log buổi tập tối thiểu | Chọn region → nhóm cơ → bài → log set/rep/kg; lưu Drift; demo 1 buổi hoàn chỉnh | M1 | todo |
 | M3 | So sánh buổi gần nhất | Theo bài vs lần gần nhất của chính bài đó, cộng `groupVolume` theo nhóm cơ; trend ±2% (`docs/03`) | M2 | todo |
 | M4 | Chart tiến trình | Mapping chart trong `docs/03` mục 6 (1RM+volume bài, set volume nhóm cơ, volume buổi) | M2, M3 | todo |
@@ -85,7 +85,7 @@ Xem thêm `Rủi ro và câu hỏi còn mở` trong từng milestone. Còn mở:
 1. Chốt nội dung nhóm B/C chính thức trong `docs/01-business-analysis.md`.
 2. (Đã chốt 2026-11-05) Nguồn seed: ExerciseGymGifsDB `v1.1.0`. GIF / video vẫn nhóm B. Import M2 chờ phân loại trong `seed/exercises.csv`.
 3. Bắt đầu buổi: bắt buộc theo lịch (M5) hay cho phép ad-hoc từ M2 (roadmap hiện: ad-hoc từ M2).
-4. (Đã chốt 2026-11-05) Ngôn ngữ UI: cả tiếng Anh và tiếng Việt. Platform ưu tiên demo (iOS / Android / cả hai) vẫn mở.
+4. (Đã chốt 2026-11-05) Ngôn ngữ UI: cả tiếng Anh và tiếng Việt. Máy demo chính: iOS simulator; Android vẫn phải chạy được.
 5. M4: ship đủ các loại chart trong mục 6 `03` hay ưu tiên chart tiến bộ bài trước.
 6. (Đã chốt 2026-11-04) Buổi tham chiếu theo từng bài + `groupVolume` theo nhóm cơ (`docs/03` mục 5).
 7. M7: xác nhận các quy tắc đơn giản trong `docs/04` (giới hạn 60 tuổi, xử lý đau vai / gối).

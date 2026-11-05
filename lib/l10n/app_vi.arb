@@ -1,0 +1,9 @@
+{
+  "@@locale": "vi",
+  "todayLabel": "Hôm nay",
+  "progressLabel": "Tiến trình",
+  "historyLabel": "Lịch sử",
+  "todayEmpty": "Chưa có buổi tập.",
+  "progressEmpty": "Chart sẽ hiện sau khi có buổi đã hoàn thành.",
+  "historyEmpty": "Buổi đã hoàn thành sẽ nằm ở đây."
+}
