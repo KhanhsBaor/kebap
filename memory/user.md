@@ -11,9 +11,9 @@ App offline-first nhật ký tập gym: lịch tuần theo nhóm cơ, log set/re
 
 ## Phase hiện tại
 
-- Scaffold Flutter; stack mục tiêu chưa gắn hết vào `pubspec.yaml`.
+- Scaffold Flutter; stack mục tiêu chưa gắn hết vào `pubspec.yaml` (đang làm trong M1).
 - Kiến trúc / agent rules đã chốt (`AGENTS.md`, `.cursor/rules/`).
-- **Roadmap milestone đã soạn** (`docs/ROADMAP.md`, `docs/milestones/M0`–`M6`) — chờ review; **chưa bắt đầu code M1**.
+- **Đang làm M1** (khung dự án): Drift schema v1, shell 3 tab, theme, l10n EN/VI, CI.
 - **Công thức đã chốt:** `docs/03-calculation-rules.md` (+ `docs/calculations.md`, `.cursor/rules/calculation-rules.mdc`).
 - **Catalog đã chốt:** region (Upper/Lower/Other) → muscle group cố định → exercise; **seed nguồn mở + custom** theo nhóm đang chọn (`docs/01-business-analysis.md`).
 - **Khảo sát + gợi ý lịch đã chốt:** M7 (quy tắc offline, `docs/04-schedule-suggestion-rules.md`), M8 (AI, sau MVP). Một ngày / một buổi có nhiều muscle group.

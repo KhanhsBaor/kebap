@@ -104,6 +104,11 @@ Rules chính:
 | `riverpod-presentation.mdc` | `features/**/presentation/**` |
 | `drift-data-layer.mdc` | `core/db/**`, `features/**/data/**` |
 | `milestone-workflow.mdc` | làm / tiếp tục milestone |
+| `theme-ui-tokens.mdc` | `core/theme/**`, `features/**/presentation/**` |
+| `router-navigation.mdc` | `core/router/**`, `main.dart`, `app.dart` |
+| `testing.mdc` | `test/**` |
+| `ci-github-actions.mdc` | `.github/workflows/**` |
+| `l10n.mdc` | `lib/l10n/**`, `l10n.yaml`, chuỗi trên UI |
 
 ## Context Management
 

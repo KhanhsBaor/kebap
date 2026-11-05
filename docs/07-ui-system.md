@@ -15,7 +15,7 @@ Giữ từ hướng gym phổ biến: cam năng lượng, nền tối đọc đ�
 
 **Cả hai theme, mặc định theo hệ thống.** Khi code M1: `ThemeMode.system`, có đủ `theme` và `darkTheme`. Câu "theme sáng" trong checklist M1 được file này thay cho phần màu. Dark mode không còn là hạng mục sau MVP. Tùy chỉnh brand sâu hơn cặp token này vẫn ngoài MVP.
 
-Copy điều khiển trong spec là tiếng Việt. Tên region, nhóm cơ và bài giữ đúng catalog ở `docs/01` cho đến khi có bảng dịch. Câu hỏi ngôn ngữ UI trên ROADMAP vẫn mở cho bản tiếng Anh.
+Copy điều khiển trong spec là tiếng Việt; app có cả tiếng Anh (decision 2026-11-05, `gen-l10n`). Tên region, nhóm cơ và bài là dữ liệu catalog (`nameEn` / `nameVi`), không đưa vào ARB.
 
 ## 2. Màu
 
@@ -151,4 +151,5 @@ Khi hệ thống bật giảm chuyển động, bỏ mọi animation không mang
 
 | Ngày | Thay đổi | Lý do |
 |---|---|---|
+| 2026-11-05 | Giao diện cả tiếng Anh và tiếng Việt; tên catalog không vào ARB | Khớp decision 2026-11-05 và rule l10n |
 | 2026-11-04 | Tạo hệ UI: nhật ký thể thao, token sáng/tối, mặc định theo hệ thống | Chốt style trước khi code M1 |

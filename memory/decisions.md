@@ -4,6 +4,7 @@ INDEX — mới nhất ở trên. Khi file vượt ~300 dòng, chuyển entry c�
 
 | Date | Tiêu đề |
 |------|---------|
+| 2026-11-05 | M1: CI GitHub Actions, schema v1, iOS simulator, l10n EN/VI |
 | 2026-11-05 | Seed ExerciseGymGifsDB; giao diện tiếng Anh và tiếng Việt |
 | 2026-11-04 | Hệ UI: nhật ký thể thao, sáng và tối theo hệ thống |
 | 2026-11-04 | M7: cardio chỉ là dòng chữ; khảo sát 2 mức kinh nghiệm; lọc dụng cụ |
@@ -19,6 +20,15 @@ INDEX — mới nhất ở trên. Khi file vượt ~300 dòng, chuyển entry c�
 | 2026-10-23 | Offline-first Drift; UI không đụng Drift generated |
 
 ---
+
+### [2026-11-05] M1: CI GitHub Actions, schema v1, iOS simulator, l10n EN/VI
+
+**Context:** Bắt đầu code M1. Ba câu mở của milestone (CI, schema v1, máy demo) và chỗ gắn set vào buổi chưa có trong `docs/01`. Giao diện EN/VI đã chốt cùng ngày, nhưng M1 chưa có chỗ để chuỗi UI. **Decision:**
+
+- CI chạy GitHub Actions trên repo `KhanhsBaor/kebap`. Một workflow: `flutter pub get` → `dart run build_runner build --delete-conflicting-outputs` → `dart format --set-exit-if-changed` → `flutter analyze` → `flutter test`. Không build iOS/Android, không secret.
+- Schema v1 tạo bảng khung, không seed: `regions`, `muscle_groups`, `exercises`, `workouts`, `workout_muscle_groups`, `workout_exercises`, `sets`. Khóa chính `int` autoincrement. Quan hệ buổi là `workouts` → `workout_exercises` → `sets`. `splitDayId` trên `workouts` để nullable và chưa có khóa ngoại vì bảng lịch thuộc M5. Xóa buổi xóa kèm nhóm, bài snapshot và set.
+- Máy demo chính là iOS simulator. App vẫn phải chạy được trên Android. Câu máy demo để mở ở entry seed cùng ngày được đóng bởi quyết định này.
+- Thêm task l10n vào M1: `gen-l10n`, `app_en.arb` + `app_vi.arb`, cho nhãn và câu trống của 3 tab. Lý do: giao diện đã chốt cả tiếng Anh và tiếng Việt (entry seed cùng ngày); chuỗi UI không hard-code trong widget. Tên region, nhóm cơ và bài là dữ liệu (`nameEn` / `nameVi`), không đưa vào ARB.
 
 ### [2026-11-05] Seed ExerciseGymGifsDB; giao diện tiếng Anh và tiếng Việt
 

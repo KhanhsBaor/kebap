@@ -1,0 +1,17 @@
+---
+description: Quy ước test Kebap (unit, widget, Drift)
+globs: test/**/*.dart
+alwaysApply: false
+---
+
+# Test
+
+- Cây `test/` mirror `lib/` (vd. `test/core/db/app_database_test.dart`, `test/features/<f>/domain/...`). Không đặt test cạnh file `lib/`.
+- Domain: unit test thuần Dart, không Flutter / Riverpod / Drift.
+- Drift: `AppDatabase(NativeDatabase.memory())`, đóng DB trong `tearDown`. Đổi schema → test migration (xem skill `kebap-drift-setup`).
+- Riverpod: `ProviderContainer` với `overrides` (vd. override `appDatabaseProvider` bằng DB memory); widget test bọc `ProviderScope(overrides: ...)` với cùng override.
+- Mock bằng `mocktail`; chỉ mock contract (repository), không mock entity.
+- Widget test chạy cả theme sáng và tối khi widget phụ thuộc màu.
+- Tên test mô tả hành vi: `'returns null when exercise has no completed session'`.
+- Công thức: dùng đúng ví dụ trong `docs/03` (rule `calculation-rules.mdc`).
+- Xong việc: `flutter analyze` + `flutter test` xanh.

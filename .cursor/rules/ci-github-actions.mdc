@@ -1,0 +1,12 @@
+---
+description: CI GitHub Actions cho Kebap
+globs: .github/workflows/**
+alwaysApply: false
+---
+
+# CI — GitHub Actions
+
+- Một workflow `.github/workflows/ci.yml`, chạy trên `push` và `pull_request`.
+- Job `ubuntu-latest`: checkout → `subosito/flutter-action` (channel stable, khớp SDK trong `pubspec.yaml`, bật cache) → `flutter pub get` → `dart run build_runner build --delete-conflicting-outputs` → `dart format --output=none --set-exit-if-changed lib test` → `flutter analyze` → `flutter test`.
+- Không build iOS/Android, không signing, không secret ở M1.
+- Generated files (`*.g.dart`, `*.freezed.dart`): theo `.gitignore` của repo; nếu không commit thì CI bắt buộc chạy build_runner trước analyze.
