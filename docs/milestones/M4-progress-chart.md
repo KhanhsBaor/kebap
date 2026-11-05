@@ -45,7 +45,7 @@ Nhìn xu hướng dài hơn “hai buổi”: progressive overload theo thời g
 
 | Loại | Dự kiến |
 |------|---------|
-| Drift | Query trên bảng M2; index `(muscleGroupId, completedAt)` nếu chưa có từ M3 |
+| Drift | Query trên bảng M2; index `WorkoutMuscleGroups(muscleGroupId)` + `Workouts(completedAt)` nếu chưa có từ M3. Set volume nhóm cơ đếm theo `exercises.muscleGroupId` của từng set, không theo nhóm của buổi |
 | Providers | `progressSeriesProvider(filter)` |
 | Màn hình | `ProgressScreen` (+ widgets chart) |
 

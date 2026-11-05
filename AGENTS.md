@@ -1,7 +1,7 @@
 # Project: Kebap — Nhật ký tập luyện
 
 App offline-first cho người tập gym: setup lịch tập tuần theo nhóm cơ, log set/rep/kg khi đang tập,
-so sánh buổi tập hôm nay với buổi gần nhất cùng nhóm cơ, xem chart tiến trình.
+so sánh từng bài hôm nay với lần gần nhất của chính bài đó, xem chart tiến trình.
 
 **Core value:** so sánh buổi tập để thấy progressive overload. Mọi quyết định ưu tiên core này.
 
@@ -40,6 +40,8 @@ Luồng phụ thuộc: **presentation → domain ← data**. Domain không impor
 - Nghiệp vụ, luồng, data model: `docs/01-business-analysis.md`
 - Tech stack, package: `docs/02-tech-stack.md`
 - **Công thức (nguồn sự thật):** `docs/03-calculation-rules.md` · pointer: `docs/calculations.md`
+- **Quy tắc gợi ý lịch từ khảo sát (nguồn sự thật):** `docs/04-schedule-suggestion-rules.md`
+- **Hệ UI (nguồn sự thật giao diện):** `docs/07-ui-system.md` · bản đồ màn: `docs/design/screens.md`
 - Roadmap & trạng thái milestone: `docs/ROADMAP.md`
 - Chi tiết từng milestone: `docs/milestones/Mx-*.md`
 
@@ -114,14 +116,39 @@ Rules chính:
 
 ## Agent Roster & Triggers
 
-| Agent / focus            | Trigger Phrases                                      | Tools              |
-| ------------------------ | ---------------------------------------------------- | ------------------ |
-| `planner`                | "implement", "add feature", "milestone", "build"     | Read, Grep, Glob   |
-| `architect`              | "design", "architecture", "layer", "ADR"             | Read, Grep, Glob   |
-| `tdd-guide`              | "tdd", "test first", "unit test", "migration test"   | Read, Write, Shell |
-| `code-reviewer`          | "review", "check quality", "before merge"            | Read, Grep, Glob   |
-| `build-error-resolver`   | "analyze error", "build error", "compile error"      | Read, Write, Shell |
-| `drift-reviewer`         | "schema", "migration", "DAO", "query review"         | Read, Grep, Glob   |
+| Agent / focus            | Trigger Phrases                                      | Tools                          |
+| ------------------------ | ---------------------------------------------------- | ------------------------------ |
+| `planner`                | "implement", "add feature", "milestone", "build"     | Read, Grep, Glob               |
+| `architect`              | "design", "architecture", "layer", "ADR"             | Read, Grep, Glob               |
+| `tdd-guide`              | "tdd", "test first", "unit test", "migration test"   | Read, Write, Shell             |
+| `code-reviewer`          | "review", "check quality", "before merge"            | Read, Grep, Glob               |
+| `build-error-resolver`   | "analyze error", "build error", "compile error"      | Read, Write, Shell             |
+| `drift-reviewer`         | "schema", "migration", "DAO", "query review"         | Read, Grep, Glob               |
+| `mobile-developer`       | "mobile", "iOS", "Android", "performance", "pin", "cold start", "accessibility", "haptic", "danh sách dài" | Read, Write, Shell, Glob, Grep |
+
+Playbook gốc: `.claude/agents/mobile-developer.md`. File đó viết cho app đa nền tảng nói chung (có React Native). **Khi làm Kebap, mục dưới thắng playbook.**
+
+### `mobile-developer`
+
+Gọi khi việc đụng trải nghiệm trên máy: UI theo nền tảng, hiệu năng (khởi động, bộ nhớ, pin, list), accessibility, haptic, layout thích ứng, hoặc chuẩn bị store. Việc domain (1RM, so sánh buổi), schema Drift, hay CRUD mỏng đi roster tương ứng — không giao cho agent này.
+
+Ràng buộc Kebap:
+
+- Flutter + Dart 3, Riverpod, Drift, go_router. Không React Native, WatermelonDB, Redux, GetIt, Hermes, TurboModules.
+- Offline trên thiết bị. MVP không có sync server, hàng đợi, hay conflict resolution.
+- Giao diện theo `docs/07-ui-system.md` (sáng/tối theo hệ thống). Không tự áp Material 3 / HIG đè token đã chốt.
+- Test: `flutter_test`, mocktail, Drift in-memory. E2E khi cần: Maestro. Không Jest, Detox, Flipper.
+- List dài dùng lazy build (`ListView.builder` / tương đương). Luồng đang tập giữ ít chạm.
+- Push, deep link, biometric, HealthKit, camera, BLE, widget, watch nằm ngoài milestone hiện tại trừ khi file milestone nói rõ.
+
+Checklist áp dụng ngay khi sửa UI:
+
+- Một codebase Flutter cho iOS và Android; khác biệt nền tảng chỉ khi `docs/07` hoặc milestone yêu cầu.
+- Widget mới chịu text scale, VoiceOver / TalkBack, và cả hai theme.
+- Chạm phản hồi trong một frame; không dựng hết item của list dài.
+- Xong việc: `flutter analyze` + `flutter test`.
+
+Checklist để sau (không làm trong milestone đang active): cold start dưới 1.5s, bộ nhớ nền dưới 120MB, pin dưới 4%/giờ, app dưới 40MB, crash dưới 0.1%, FCM/APNs, Universal Links, CI store, certificate pinning.
 
 ---
 

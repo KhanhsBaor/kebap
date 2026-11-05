@@ -15,8 +15,8 @@ Gắn stack mục tiêu vào repo và tạo xương sống chạy được: thư
 - Dependencies theo `docs/02-tech-stack.md` (Riverpod, Drift, go_router, freezed, …)
 - Drift: `AppDatabase`, schema version khởi đầu, DAO stub hoặc table tối thiểu (vd. `meta` / chưa bắt buộc bảng nghiệp vụ)
 - `ProviderScope` + database provider
-- go_router: ít nhất Home + 1–2 route placeholder (Workout / Progress)
-- Theme Material 3 cơ bản (màu/typography tạm, không brand đầy đủ)
+- go_router: 3 tab placeholder theo `docs/design/screens.md` (Hôm nay, Tiến trình, Lịch sử). Màn đang tập không nằm trong tab
+- Theme Material 3 theo `docs/07-ui-system.md` (sáng và tối, mặc định theo hệ thống)
 - CI: workflow chạy `flutter pub get`, `dart run build_runner` (nếu cần), `flutter analyze`, `flutter test`
 - Smoke test: app / router / DB memory mở được
 
@@ -24,7 +24,7 @@ Gắn stack mục tiêu vào repo và tạo xương sống chạy được: thư
 
 - Log set, so sánh, chart, lịch tuần
 - Seed bài tập / nhóm cơ đầy đủ
-- Branding / design system hoàn chỉnh
+- Thiết kế lại token (đã chốt ở `docs/07`) hoặc dựng màn nghiệp vụ giả
 - Store listing, signing, flavors
 
 ## Checklist task (1 chat / task)
@@ -33,8 +33,8 @@ Gắn stack mục tiêu vào repo và tạo xương sống chạy được: thư
 - [ ] Tạo cây thư mục `lib/core/{db,router,theme}` và `lib/features/` (placeholder)
 - [ ] Drift `AppDatabase` + schema v1 + mở DB (path_provider); test `NativeDatabase.memory()`
 - [ ] Riverpod: `main.dart` bọc `ProviderScope`, provider expose DB
-- [ ] go_router shell + 2–3 route placeholder; gắn vào `MaterialApp.router`
-- [ ] Theme cơ bản (light); áp dụng trên app
+- [ ] go_router shell 3 tab (Hôm nay, Tiến trình, Lịch sử); gắn vào `MaterialApp.router`
+- [ ] Theme sáng + tối theo `docs/07`; áp dụng trên app (`ThemeMode.system`)
 - [ ] `build_runner` chạy sạch cho Drift/Riverpod (và freezed nếu đã có model mẫu)
 - [ ] CI GitHub Actions (hoặc tương đương): analyze + test
 - [ ] Smoke widget/unit test tối thiểu + cập nhật trạng thái ROADMAP khi xong
@@ -45,7 +45,7 @@ Gắn stack mục tiêu vào repo và tạo xương sống chạy được: thư
 |------|---------|
 | Drift tables | Schema v1 tối thiểu (có thể chỉ bảng kỹ thuật hoặc empty tables list + version); migration hook sẵn |
 | Providers | `appDatabaseProvider` (hoặc tương đương), router nếu cần |
-| Màn hình | `HomePlaceholderScreen`, `WorkoutPlaceholderScreen`, `ProgressPlaceholderScreen` (tên có thể đổi) |
+| Màn hình | Placeholder S01 Hôm nay, S02 Tiến trình, S03 Lịch sử |
 
 ## Definition of Done
 

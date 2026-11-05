@@ -8,5 +8,5 @@ Cursor rule: `.cursor/rules/calculation-rules.mdc`.
 - Hàm thuần Dart trong `lib/features/*/domain/` (vd. `calculations/`), không import Flutter hay Drift.
 - Unit test bắt buộc; dùng ví dụ trong `03` (vd. Bench 60×10×2 + 60×8 → 1680).
 - Warmup (`isWarmup`) và set thiếu kg/reps: loại khỏi volume và 1RM; không tính 0.
-- 1RM chỉ với `reps ≤ 10`; so sánh theo bài (volume + max 1RM), ngưỡng giữ nguyên ±2%.
+- 1RM chỉ với `reps ≤ 10`. So sánh theo bài với buổi `completed` gần nhất có đúng bài đó (`endedAt` trước `startedAt`): volume + max 1RM, trend riêng, ngưỡng giữ nguyên ±2%. Thêm `groupVolume` theo nhóm cơ (bỏ set kg = 0).
 - Code và `03` mâu thuẫn thì hỏi người dùng — không tự chọn.

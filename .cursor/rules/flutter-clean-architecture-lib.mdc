@@ -51,7 +51,7 @@ class CompareSessions {
 ## Data
 
 - Repository impl inject DAO / `AppDatabase`, map sang domain entity.
-- Truy vấn đặc thù (vd. "buổi gần nhất cùng nhóm cơ") nằm trong **DAO**, không rải ở UI.
+- Truy vấn đặc thù (vd. buổi tham chiếu theo `docs/03` mục 5) nằm trong **DAO**, không rải ở UI.
 - Không trả Drift row ra ngoài data layer.
 
 ```dart

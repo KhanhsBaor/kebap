@@ -4,10 +4,63 @@ INDEX — mới nhất ở trên. Khi file vượt ~300 dòng, chuyển entry c�
 
 | Date | Tiêu đề |
 |------|---------|
+| 2026-11-05 | Seed ExerciseGymGifsDB; giao diện tiếng Anh và tiếng Việt |
+| 2026-11-04 | Hệ UI: nhật ký thể thao, sáng và tối theo hệ thống |
+| 2026-11-04 | M7: cardio chỉ là dòng chữ; khảo sát 2 mức kinh nghiệm; lọc dụng cụ |
+| 2026-11-04 | M2 bám docs/05 (nhập set) và docs/06 (vòng đời buổi) |
+| 2026-11-04 | Buổi tham chiếu theo từng bài, thêm groupVolume theo nhóm cơ |
+| 2026-11-04 | Khảo sát người tập + gợi ý lịch: quy tắc offline (M7), AI sau (M8) |
+| 2026-11-04 | Một ngày lịch / một buổi tập có nhiều muscle group |
+| 2026-10-26 | Exercise: seed nguồn mở + custom theo muscle group |
+| 2026-10-26 | Catalog: region → muscle group → exercise (cố định) |
 | 2026-10-23 | Công thức chính thức: docs/03-calculation-rules.md |
 | 2026-10-23 | Thứ tự milestone: foundation → log → compare → chart → schedule → history |
 | 2026-10-23 | Clean Architecture feature-first + Riverpod (không BLoC) |
 | 2026-10-23 | Offline-first Drift; UI không đụng Drift generated |
+
+---
+
+### [2026-11-05] Seed ExerciseGymGifsDB; giao diện tiếng Anh và tiếng Việt
+
+**Context:** M2 còn mở nguồn seed và ngôn ngữ UI. **Decision:** Lấy metadata 1323 bài từ [ExerciseGymGifsDB](https://github.com/JahelCuadrado/ExerciseGymGifsDB) tag `v1.1.0` vào `seed/exercises.csv`. Không tải GIF (nguồn không cấp bản quyền ảnh; video thuộc nhóm B). Nguồn chỉ có EN/ES, không có tiếng Việt: `nameEn` đã điền, `nameVi` để trống. Chủ dự án tự điền `kebapMuscleGroup`, `kebapEquipment` và `nameVi` trước khi M2 import. Giao diện app dùng cả tiếng Anh và tiếng Việt. Máy demo (iOS hay Android) vẫn chưa chốt.
+
+### [2026-11-04] Hệ UI: nhật ký thể thao, sáng và tối theo hệ thống
+
+**Context:** Cần style trước khi code M1. Catalog gym nghiêng khối màu và nền OLED. Checklist M1 từng ghi theme sáng. ROADMAP từng để dark mode ở nhóm B. **Decision:** Style và token ở `docs/07-ui-system.md`. Bản đồ màn S01–S13 ở `docs/design/screens.md`. Cam `#F97316` chỉ cho nút chính và đường 1RM. Trend tăng / giữ nguyên / giảm có chữ, ngưỡng ±2% vẫn theo `docs/03`. Cả hai theme, mặc định theo hệ thống, gắn khi code M1. Tab dưới: Hôm nay, Tiến trình, Lịch sử. Màn đang tập full-screen. Cân bằng nhóm cơ vẽ cột, không radar. Dark mode không còn là hạng mục sau MVP. Tùy chỉnh brand sâu hơn cặp token này vẫn ngoài MVP.
+
+### [2026-11-04] M7: cardio chỉ là dòng chữ; khảo sát 2 mức kinh nghiệm; lọc dụng cụ
+
+**Context:** Review docs chỉ ra cardio không log được, nhiều câu khảo sát không đổi kết quả, và câu dụng cụ không có task lọc. **Decision:** Giảm mỡ không thêm slug `cardio` vào lịch; màn lịch tuần hiện một dòng chữ. Log cardio (thời lượng, quãng đường) để V1.1. Mục tiêu quyết định số set, khoảng rep và nghỉ mặc định (bảng trong `docs/01`). Kinh nghiệm còn Mới bắt đầu / Đã tập. Cân nặng tùy chọn, chỉ lưu. Seed M2 điền enum dụng cụ (không null); M7 lọc bài theo bảng trong `docs/04`, có nút "Hiện cả bài cần dụng cụ khác". Dụng cụ không đổi nhóm cơ của ngày.
+
+### [2026-11-04] M2 bám docs/05 (nhập set) và docs/06 (vòng đời buổi)
+
+**Context:** M2 chưa có ngân sách chạm và vòng đời buổi dở. **Decision:** `docs/05` và `docs/06` đã chốt làm nguồn cho M2 (câu hỏi mở ở cuối hai file vẫn giữ). Một buổi `in_progress`, "Lưu set" ghi ngay, hủy/kết thúc theo `docs/06`, cột "Lần trước" theo `docs/03` mục 5 nhưng chưa hiện trend ±2%. Đồng hồ nghỉ cơ bản (±15 giây) thuộc M2. Phần lịch tuần trong `docs/06` mục 2 có hiệu lực từ M5.
+
+### [2026-11-04] Buổi tham chiếu theo từng bài, thêm groupVolume theo nhóm cơ
+
+**Context:** Buổi nhiều nhóm cơ đang chặn M3. **Decision:** Với mỗi bài, buổi tham chiếu là buổi `completed` gần nhất có đúng `exerciseId`, `endedAt` trước `startedAt` của buổi hiện tại. Buổi `in_progress` không phải tham chiếu. Hai buổi `completed` cùng ngày lịch vẫn so được. Thêm `groupVolume` (bỏ set kg = 0) và một trend theo nhóm cơ trên màn tóm tắt, không thay so sánh theo bài và không thêm chart mới. Chi tiết: `docs/03` mục 5–6.
+
+### [2026-11-04] Khảo sát người tập + gợi ý lịch: quy tắc offline (M7), AI sau (M8)
+
+**Context:** User muốn khảo sát người tập trước khi vào app để gợi ý lịch bằng AI; nhưng AI đang ở nhóm C, dự án không có backend, và không được nhúng API key vào app. **Decision:** Khảo sát 5 câu bắt buộc (mục tiêu, kinh nghiệm, số buổi/tuần, thời lượng, dụng cụ) + câu tùy chọn (nhóm ưu tiên, chỗ đau, cân nặng, năm sinh); không hỏi chiều cao; luôn bỏ qua được. M7: `RuleBasedScheduleSuggester` offline theo `docs/04-schedule-suggestion-rules.md`, áp dụng vào lịch M5. M8 (sau MVP): AI qua server trung gian giữ key, kết quả phải qua bước kiểm tra `docs/04` mục 5, lỗi thì dùng bộ quy tắc. Gợi ý lịch bằng AI rời nhóm C; AI coach trong lúc tập vẫn ở nhóm C.
+
+---
+
+### [2026-11-04] Một ngày lịch / một buổi tập có nhiều muscle group
+
+**Context:** Lịch gợi ý cần ngày kiểu Push = Chest + Shoulders + Triceps. **Decision:** Lịch tuần lưu nhiều muscle group / ngày (có thứ tự); buổi tập gắn nhiều muscle group qua bảng nối `workout_muscle_groups`; exercise vẫn thuộc đúng một muscle group. **Còn chặn M3:** định nghĩa buổi tham chiếu khi buổi có nhiều nhóm phải chốt trong `docs/03` mục 5 (đề xuất: theo từng bài, lấy buổi gần nhất có cùng bài).
+
+---
+
+### [2026-10-26] Exercise: seed nguồn mở + custom theo muscle group
+
+**Context:** Cần thư viện bài đủ dùng ngay + linh hoạt khi thiếu bài. **Decision:** (1) **Seed** exercises từ nguồn mở, map vào muscle groups cố định, ship offline trong Drift. (2) User **tạo custom exercise** với tên tự đặt, bắt buộc gắn `muscleGroupId` đang chọn (không tạo region/group mới). Field `isCustom` (và có thể `sourceId` cho bài seed). Có từ **M2**. Nguồn/số lượng seed cụ thể chốt lúc implement.
+
+---
+
+### [2026-10-26] Catalog: region → muscle group → exercise (cố định)
+
+**Context:** Cần taxonomy bài tập kiểu Hevy (nhóm cơ giải phẫu), không dùng PPL làm cây chính. **Decision:** Ba **region** cố định — Upper body, Lower body, Other. Trong mỗi region là **muscle groups** cố định (Upper: Abdominals, Biceps, Chest, Forearms, Lats, Lower back, Neck, Shoulders, Traps, Triceps, Upper back; Lower: Abductors, Adductors, Calves, Glutes, Hamstrings, Quadriceps; Other: Cardio, Full body, Others). Exercise thuộc một muscle group. UI chọn: region → group → exercises. So sánh / lịch / set-volume theo **muscle group**, không theo region. Chi tiết slug: `docs/01-business-analysis.md`.
 
 ---
 

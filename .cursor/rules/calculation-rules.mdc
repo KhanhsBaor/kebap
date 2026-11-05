@@ -18,7 +18,7 @@ alwaysApply: false
 - Dart thuần trong `lib/features/<feature>/domain/` (vd. `calculations/`).
 - Không import Flutter, Riverpod, Drift trong hàm tính.
 - Unit test bắt buộc; dùng đúng ví dụ trong `03` (vd. Bench 60×10, 60×10, 60×8 → volume bài = 1680).
-- Tên tham chiếu: `setVolume`, `exerciseVolume`, `sessionVolume`, `estimated1RM`, `weeklySetCount` (+ use case so sánh riêng).
+- Tên tham chiếu: `setVolume`, `exerciseVolume`, `sessionVolume`, `groupVolume`, `estimated1RM`, `weeklySetCount` (+ use case so sánh riêng).
 
 ## Tóm tắt bắt buộc (chi tiết trong `03`)
 
@@ -29,7 +29,7 @@ alwaysApply: false
 | 1RM (Epley) | `reps == 1 → kg`; else `kg × (1 + reps/30)`; **chỉ** set `reps ≤ 10`; mỗi bài/buổi lấy 1RM cao nhất cho chart |
 | Đơn vị | Lưu DB **kg**; lb chỉ khi hiển thị |
 | Bodyweight (`kg = 0`) | MVP: dùng reps làm chỉ số riêng (không nhồi vào load volume như tạ) |
-| So sánh 2 buổi | Buổi gần nhất cùng nhóm cơ (hoặc split day), ngày **trước** buổi hiện tại; **theo từng bài** có ở cả hai: load volume + 1RM cao nhất; tăng / giữ / giảm; giữ nếu \|Δ\| ≤ **2%** |
+| So sánh | Theo **từng bài**: buổi `completed` gần nhất có đúng `exerciseId`, `endedAt` trước `startedAt` (không dùng buổi `in_progress`); load volume + max 1RM, trend riêng; bodyweight so reps. Thêm `groupVolume` theo nhóm cơ (bỏ set kg = 0). Giữ nếu \|Δ\| ≤ **2%** |
 | Chart | Theo bảng mapping mục 6 trong `03` — không tự đổi metric mặc định |
 
 ## Việc không làm

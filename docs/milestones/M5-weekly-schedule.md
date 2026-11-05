@@ -2,7 +2,7 @@
 
 **Trạng thái:** todo  
 **Phụ thuộc:** M2  
-**Demo cuối milestone:** Gán nhóm cơ cho các ngày trong tuần → Home/Start hiện “Hôm nay: Pull” → một chạm bắt đầu buổi với nhóm cơ đó (vẫn log/compare như M2–M3).
+**Demo cuối milestone:** Gán một hoặc nhiều **muscle group** (từ catalog region → group trong `01`) cho các ngày → Home/Start hiện “Hôm nay: Chest, Shoulders, Triceps” → một chạm bắt đầu buổi với các nhóm đó (vẫn log/compare như M2–M3).
 
 ## Mục tiêu và giá trị
 
@@ -11,7 +11,7 @@ Hoàn thiện bước 1 của luồng MVP: setup lịch tuần, giảm ma sát k
 
 ## Trong phạm vi
 
-- Model lịch: map `weekday` → `muscleGroupId` (và ngày nghỉ)
+- Model lịch: map `weekday` → **danh sách** `muscleGroupId` có thứ tự (ngày không có nhóm = nghỉ); cùng định dạng đầu ra của `docs/04` mục 1 để M7 áp dụng thẳng
 - CRUD/setup lịch tuần (UI đơn giản)
 - Home: gợi ý buổi hôm nay theo lịch
 - Start workout prefill nhóm cơ từ lịch; vẫn cho đổi / tập ad-hoc
@@ -26,14 +26,14 @@ Hoàn thiện bước 1 của luồng MVP: setup lịch tuần, giảm ma sát k
 
 ## Checklist task (1 chat / task)
 
-- [ ] Schema: `weekly_schedule_entries` (weekday, muscleGroupId nullable = rest) + migration
+- [ ] Schema: `weekly_schedule_entries` (weekday, muscleGroupId, position; nhiều dòng / ngày; không có dòng = nghỉ) + migration
 - [ ] Domain entity + repository contract
-- [ ] Repository impl + seed lịch mặc định (vd. PPL hoặc trống)
-- [ ] Providers: watch schedule; `todayMuscleGroupProvider`
-- [ ] UI: `ScheduleSetupScreen` (7 ngày, chọn nhóm cơ)
+- [ ] Repository impl + seed lịch mặc định (vd. trống hoặc vài ngày mẫu: Chest / Quadriceps)
+- [ ] Providers: watch schedule; `todayMuscleGroupsProvider`
+- [ ] UI: `ScheduleSetupScreen` (7 ngày; mỗi ngày chọn một hoặc nhiều muscle group, hoặc nghỉ)
 - [ ] UI: Home — card “Hôm nay” + CTA start
-- [ ] Wire `StartWorkoutScreen`: nhận `muscleGroupId` từ lịch
-- [ ] Test DAO/repo: weekday → group; rest day
+- [ ] Wire `StartWorkoutScreen`: nhận danh sách `muscleGroupId` từ lịch
+- [ ] Test DAO/repo: weekday → nhiều group đúng thứ tự; rest day
 - [ ] Demo: đổi lịch → Home đổi theo ngày giả lập hoặc mock clock nếu cần
 
 ## Drift table / provider / màn hình
@@ -53,7 +53,7 @@ Hoàn thiện bước 1 của luồng MVP: setup lịch tuần, giảm ma sát k
 
 ## Rủi ro và câu hỏi còn mở
 
-- Một ngày một nhóm cơ hay cho phép nhiều nhóm / split?
+- (Đã chốt 2026-11-04) Một ngày được có nhiều nhóm cơ.
 - Tuần bắt đầu Monday hay Sunday? (locale)
 - Lịch có “hiệu lực từ ngày” hay chỉ một template tuần lặp?
 - Timezone khi xác định “hôm nay”?

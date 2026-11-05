@@ -2,7 +2,11 @@
 
 **Trạng thái:** todo  
 **Phụ thuộc:** M1  
-**Demo cuối milestone:** Bắt đầu buổi (chọn nhóm cơ) → thêm bài → nhập vài set (rep/kg) với ít chạm → kết thúc buổi → mở lại thấy dữ liệu còn (offline).
+**Demo cuối milestone:** Bắt đầu buổi ad-hoc (chọn một hoặc nhiều nhóm cơ, vd. Chest + Triceps) → thêm bài thuộc các nhóm đó → lưu vài set theo `docs/05` → kill app → mở lại: set đã lưu còn, Home hiện banner "Buổi đang dở" (không tự nhảy vào màn tập) → tiếp tục hoặc kết thúc theo `docs/06`.
+
+**Nguồn tương tác:** `docs/05-log-set-interaction-spec.md` · **vòng đời:** `docs/06-workout-session-lifecycle.md`.
+
+**Catalog:** `docs/01-business-analysis.md` § Catalog bài tập (Upper/Lower/Other → muscle groups cố định → exercises).
 
 ## Mục tiêu và giá trị
 
@@ -11,10 +15,14 @@ Hoàn thành **luồng đang tập** tối thiểu — trái tim nhật ký.
 
 ## Trong phạm vi
 
-- Entity + repository: nhóm cơ, bài tập (seed nhỏ), buổi tập, set (gồm `isWarmup`, kg/reps nullable theo `docs/03-calculation-rules.md`)
-- Bắt đầu buổi **ad-hoc** theo nhóm cơ (chưa bắt buộc lịch tuần — lịch ở M5)
-- Màn hình đang tập: chọn/ thêm bài, log set (rep, kg), đánh dấu set xong; đánh dấu warmup nếu cần
-- Kết thúc buổi (status completed + timestamp)
+- Entity + repository: **body region**, **muscle group** (cố định), **exercises** (seed + custom), buổi tập gắn **một hoặc nhiều** muscle group, set (gồm `isWarmup`, kg/reps nullable theo `docs/03-calculation-rules.md`)
+- Bắt đầu buổi **ad-hoc**: chọn region → một hoặc nhiều muscle group (chưa bắt buộc lịch tuần — lịch ở M5; các dòng "hôm nay" / ngày nghỉ trong `docs/06` mục 2 có hiệu lực từ M5)
+- Tối đa một buổi `in_progress`; mỗi "Lưu set" ghi ngay vào Drift; hủy và kết thúc theo `docs/06` mục 4–5
+- Màn hình đang tập theo `docs/05`: nút − / + và bàn phím số, prefill, "Lưu set" là bước hoàn thành (không có bước đánh dấu xong riêng), cột "Lần trước" (số từ buổi tham chiếu `docs/03` mục 5, chưa hiện trend ±2% — trend thuộc M3), warmup bằng cách chạm số thứ tự set
+- Đồng hồ nghỉ cơ bản: mặc định theo mục tiêu (`docs/01` bảng set/rep/nghỉ; chưa có hồ sơ thì dùng dòng Khỏe tổng quát), chỉnh ±15 giây. Rest timer nâng cao vẫn ngoài phạm vi
+- **Seed** bài từ nguồn mở → asset/JSON → Drift (offline)
+- **Custom exercise:** tạo tên bài mới gắn `muscleGroupId` đang chọn (`isCustom = true`); hiện trong list nhóm đó như bài seed
+- Kết thúc buổi theo bảng `docs/06` mục 5 (`completed` chỉ khi có ít nhất một set đã lưu; `endedAt` = lúc bấm kết thúc)
 - Stream UI từ `repository.watch*()` → Drift
 - Domain helpers volume tối thiểu (`setVolume` / `exerciseVolume`) theo `03` + unit test ví dụ Bench 1680; test DAO/repo memory
 - Đơn vị lưu **kg** (đổi lb chỉ khi hiển thị — sau nếu cần)
@@ -25,44 +33,53 @@ Hoàn thành **luồng đang tập** tối thiểu — trái tim nhật ký.
 - Chart (M4)
 - Lịch tuần (M5)
 - Sửa buổi đã đóng phức tạp (M6 — cho phép sửa set buổi đang mở)
-- Rest timer, RPE, supersets
+- Rest timer nâng cao (đồng hồ cơ bản ±15 giây thuộc phạm vi), RPE, supersets
 - Chart / so sánh đầy đủ (M3–M4); 1RM dùng trong domain/chart theo `03`, không màn 1RM riêng
-- Thư viện bài tập lớn / tìm kiếm nâng cao
+- Thư viện full + video / tìm kiếm nâng cao (nhóm B) — seed MVP đủ dùng là được
 - Bodyweight nâng cao (cân người + tạ thêm) — MVP theo `03`: reps riêng khi kg = 0
+- Đổi / xóa muscle group cố định; custom region
 
 ## Checklist task (1 chat / task)
 
-- [ ] Chốt schema Drift: `muscle_groups`, `exercises`, `workouts`, `workout_exercises`, `sets` (tên có thể chỉnh) + migration v2 nếu M1 để trống
-- [ ] Domain entities (freezed) + repository contracts
-- [ ] Seed nhóm cơ + vài bài tập mẫu (DAO/seed script)
+- [ ] Schema Drift: `muscle_groups` (+ region), `exercises` (`muscleGroupId`, `isCustom`, `sourceId` nullable, `equipment` enum bắt buộc với bài seed, để trống với custom — `docs/04`), `workouts`, `workout_muscle_groups` (bảng nối, buổi ↔ nhiều nhóm), `workout_exercises`, `sets` + migration nếu cần
+- [ ] Domain entities (freezed) + repository contracts — region / muscle group / exercise / workout / set
+- [ ] Seed region + đủ muscle groups theo `01`; import các dòng trong `seed/exercises.csv` đã có `kebapMuscleGroup`, `kebapEquipment` và `nameVi` (bài seed: `equipment` không null, tên EN + VI)
 - [ ] Data: repository impl + mapper Drift ↔ entity
-- [ ] Use case/command: start workout, add exercise to workout, log/update set, finish workout
+- [ ] Use case/command: start workout, add exercise, **createCustomExercise(name, muscleGroupId)**, log/update set, finish workout
 - [ ] Providers/notifiers Riverpod cho phiên đang tập (không nhét business nặng vào notifier)
-- [ ] UI: màn bắt đầu buổi (chọn nhóm cơ)
-- [ ] UI: màn đang tập — list bài + nhập set nhanh (ít chạm)
-- [ ] UI: kết thúc buổi + xác nhận ngắn (chỉ nếu cần tránh mất dữ liệu)
-- [ ] Test: DAO memory (insert/watch workout+sets); unit test `setVolume`/`exerciseVolume` theo ví dụ trong `docs/03-calculation-rules.md`
-- [ ] Demo script ghi trong milestone / memory: 1 buổi Push mẫu
+- [ ] UI: start — chọn **Upper body / Lower body / Other** → chọn một hoặc nhiều muscle group
+- [ ] UI: đang tập theo `docs/05` — bài của các nhóm đã chọn, "Lưu set", prefill, cột "Lần trước", warmup, đồng hồ nghỉ ±15 giây
+- [ ] UI: Home — banner "Buổi đang dở" (Tiếp tục / Hủy buổi) khi có `in_progress`; không tự mở màn tập
+- [ ] UI: tạo custom exercise (tên) trong ngữ cảnh nhóm cơ đã chọn; thêm ngay vào buổi nếu đang tập
+- [ ] UI: hủy và kết thúc theo `docs/06` mục 4–5 (0 set không cho kết thúc; còn set dự kiến thì hỏi)
+- [ ] Widget test: đếm `tester.tap` theo ngân sách `docs/05` mục 2; vùng chạm tối thiểu 48 dp
+- [ ] Test: DAO seed + custom; filter by `muscleGroupId`; unit test volume theo `03`
+- [ ] Demo script: buổi **Chest + Triceps** với ≥1 bài seed + ≥1 bài custom
 
 ## Drift table / provider / màn hình
 
 | Loại | Dự kiến |
 |------|---------|
-| Drift | `MuscleGroups`, `Exercises`, `Workouts`, `WorkoutExercises`, `Sets` (+ index theo `workoutId`, `muscleGroupId`, `startedAt`) |
-| Providers | `muscleGroupRepository`, `exerciseRepository`, `workoutRepository`, `activeWorkoutNotifier` / tương đương |
-| Màn hình | `StartWorkoutScreen`, `ActiveWorkoutScreen` (thay placeholder Workout) |
+| Drift | `MuscleGroups` (region), `Exercises` (`muscleGroupId`, `isCustom`, `equipment` enum bắt buộc với seed), `Workouts`, `WorkoutMuscleGroups`, `WorkoutExercises`, `Sets` |
+| Providers | `muscleGroupRepository`, `exerciseRepository` (watch by groups + create custom), `workoutRepository`, `activeWorkoutNotifier` |
+| Màn hình | `StartWorkoutScreen` (region → nhiều group), `ActiveWorkoutScreen`, dialog/sheet **Create custom exercise** |
 
 ## Definition of Done
 
 - [ ] `flutter analyze` + `flutter test` xanh
 - [ ] Test migration nếu schema đổi từ M1
-- [ ] Demo: cold start → log ≥ 2 bài × ≥ 2 set → finish → kill app → mở lại vẫn thấy buổi completed
+- [ ] Demo: cold start → lưu ≥ 2 bài × ≥ 2 set → kill app giữa buổi → mở lại thấy banner "Buổi đang dở" và đúng các set đã lưu → kết thúc → buổi `completed`
 - [ ] UI không import `*.drift.dart`
-- [ ] Số bước chạm từ “bắt đầu” đến “log xong 1 set” được ghi nhận / chấp nhận được (mục tiêu: tối thiểu)
+- [ ] Ngân sách chạm trong `docs/05` mục 2 được widget test giữ (80% set ≤ 2 chạm là mục tiêu kiểm chứng sau, không chặn demo)
 
 ## Rủi ro và câu hỏi còn mở
 
-- Nhóm cơ: list cố định (Push/Pull/Legs/…) hay CRUD tự do?
-- Bài tập: chỉ seed hay cho tạo custom ngay M2?
-- Cho phép nhiều buổi `in_progress` hay chỉ một?
+- (Đã chốt) Region + muscle groups cố định; seed nguồn mở + custom theo nhóm đang chọn.
+- (Đã chốt 2026-11-05) Nguồn seed: ExerciseGymGifsDB `v1.1.0`, file `seed/exercises.csv`. Chưa import được cho đến khi điền `kebapMuscleGroup`, `kebapEquipment`, `nameVi`. Dedupe tên custom trùng seed vẫn mở.
+- (Đã chốt trong `docs/06`) Chỉ một buổi `in_progress`.
+- Buổi tập có được thêm bài **ngoài** các muscle group đã chọn không? (khuyến nghị MVP: không — ít chạm). So sánh theo `docs/03` không còn phụ thuộc giới hạn này.
+- Custom exercise trong buổi nhiều nhóm: người dùng chọn nhóm nào trong số các nhóm của buổi
+- (Đã chốt) Bài seed có `equipment` không null; lọc danh sách bài thuộc M7 (`docs/04`).
+- Custom: cho sửa/xóa sau khi đã dùng trong buổi cũ không? (có thể để M6)
 - (Đã chốt bởi `03`: lưu kg; có `isWarmup`; warmup không vào volume/1RM.)
+- (Đã chốt 2026-11-04) Cách nhập set, ngân sách chạm và cột "Lần trước": `docs/05`. Vòng đời buổi: `docs/06`.

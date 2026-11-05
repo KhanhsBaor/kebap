@@ -53,6 +53,6 @@ Nhật ký đáng tin: sửa sai số sau khi tập, xem lại quá khứ.
 
 ## Rủi ro và câu hỏi còn mở
 
-- Cho phép sửa `muscleGroupId` của buổi đã hoàn thành không?
-- Xóa buổi đang được dùng làm “previous” của buổi khác — chỉ cập nhật reactive hay cần messaging?
+- Cho phép sửa danh sách muscle group của buổi đã hoàn thành không?
+- (Đã chốt 2026-11-04) Xóa buổi đang làm tham chiếu: chỉ cập nhật reactive; buổi `completed` kế trước của bài hoặc nhóm đó trở thành tham chiếu. Không cần thông báo riêng.
 - Có cần “chỉnh giờ hoàn thành” không (ảnh hưởng chart theo ngày)?
