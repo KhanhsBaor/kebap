@@ -8,7 +8,7 @@ void main() {
   late AppDatabase database;
 
   setUp(() {
-    database = AppDatabase(NativeDatabase.memory());
+    database = AppDatabase(NativeDatabase.memory(), seedOnOpen: false);
   });
 
   tearDown(() async {
@@ -76,6 +76,11 @@ void main() {
             reps: const Value(8),
           ),
         );
+
+    final storedWorkout = await (database.select(
+      database.workouts,
+    )..where((row) => row.id.equals(workoutId))).getSingle();
+    expect(storedWorkout.status, WorkoutStatus.inProgress);
 
     final stored = await (database.select(
       database.workoutSets,

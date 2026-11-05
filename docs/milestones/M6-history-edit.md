@@ -14,6 +14,7 @@ Nhật ký đáng tin: sửa sai số sau khi tập, xem lại quá khứ.
 - Danh sách buổi completed (lọc theo nhóm cơ / thời gian đơn giản)
 - Chi tiết buổi: exercises + sets
 - Sửa set (reps, kg); xóa set; xóa buổi (confirm)
+- Sửa hoặc xóa custom exercise (để từ M2)
 - Đảm bảo stream compare/chart cập nhật sau sửa (reactive Drift)
 - Test repo: update/delete → watch emit
 
@@ -29,6 +30,7 @@ Nhật ký đáng tin: sửa sai số sau khi tập, xem lại quá khứ.
 - [ ] UI: `WorkoutHistoryScreen` (list từ repository.watch)
 - [ ] UI: `WorkoutDetailScreen` — xem + edit set inline hoặc form ngắn
 - [ ] Commands: updateSet, deleteSet, deleteWorkout (+ confirm dialog)
+- [ ] Sửa tên hoặc xóa custom exercise; bài đã dùng trong buổi cũ không thành mồ côi
 - [ ] Repository/DAO implement + cascade xóa hợp lý
 - [ ] Kiểm tra M3: sửa buổi previous → delta buổi sau đổi đúng
 - [ ] Kiểm tra M4: chart điểm cập nhật sau edit
