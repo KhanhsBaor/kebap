@@ -11,7 +11,7 @@ Chi tiết từng milestone: `docs/milestones/`.
 | ID | Tên | Mục tiêu | Phụ thuộc | Trạng thái |
 |----|-----|----------|-----------|------------|
 | M0 | Agent docs + kiến trúc | Rules, `AGENTS.md`, Clean Architecture + Riverpod/Drift đã chốt trên giấy | — | done |
-| M1 | Khung dự án | App chạy được: thư mục feature-first, Drift shell, go_router, theme, Riverpod root, CI analyze/test | M0 | doing |
+| M1 | Khung dự án | App chạy được: thư mục feature-first, Drift shell, go_router, theme, Riverpod root, CI analyze/test | M0 | done |
 | M2 | Log buổi tập tối thiểu | Chọn region → nhóm cơ → bài → log set/rep/kg; lưu Drift; demo 1 buổi hoàn chỉnh | M1 | todo |
 | M3 | So sánh buổi gần nhất | Theo bài vs lần gần nhất của chính bài đó, cộng `groupVolume` theo nhóm cơ; trend ±2% (`docs/03`) | M2 | todo |
 | M4 | Chart tiến trình | Mapping chart trong `docs/03` mục 6 (1RM+volume bài, set volume nhóm cơ, volume buổi) | M2, M3 | todo |

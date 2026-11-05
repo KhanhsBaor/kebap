@@ -1,6 +1,6 @@
 # M1 — Khung dự án
 
-**Trạng thái:** doing  
+**Trạng thái:** done  
 **Phụ thuộc:** M0  
 **Demo cuối milestone:** `flutter run` → shell app (theme + vài route placeholder), `flutter analyze` + `flutter test` xanh; CI chạy được trên PR/push.
 
@@ -30,16 +30,16 @@ Gắn stack mục tiêu vào repo và tạo xương sống chạy được: thư
 
 ## Checklist task (1 chat / task)
 
-- [ ] Thêm packages mục tiêu vào `pubspec.yaml` + `flutter pub get`
-- [ ] Tạo cây thư mục `lib/core/{db,router,theme}` và `lib/features/` (placeholder)
-- [ ] Drift `AppDatabase` + schema v1 + mở DB (path_provider); test `NativeDatabase.memory()`
-- [ ] Riverpod: `main.dart` bọc `ProviderScope`, provider expose DB
-- [ ] go_router shell 3 tab (Hôm nay, Tiến trình, Lịch sử); gắn vào `MaterialApp.router`
-- [ ] Theme sáng + tối theo `docs/07`; áp dụng trên app (`ThemeMode.system`)
-- [ ] Setup l10n EN/VI (gen-l10n, `app_en.arb` + `app_vi.arb`) cho nhãn 3 tab
-- [ ] `build_runner` chạy sạch cho Drift/Riverpod (và freezed nếu đã có model mẫu)
-- [ ] CI GitHub Actions (hoặc tương đương): analyze + test
-- [ ] Smoke widget/unit test tối thiểu + cập nhật trạng thái ROADMAP khi xong
+- [x] Thêm packages mục tiêu vào `pubspec.yaml` + `flutter pub get`
+- [x] Tạo cây thư mục `lib/core/{db,router,theme}` và `lib/features/` (placeholder)
+- [x] Drift `AppDatabase` + schema v1 + mở DB (path_provider); test `NativeDatabase.memory()`
+- [x] Riverpod: `main.dart` bọc `ProviderScope`, provider expose DB
+- [x] go_router shell 3 tab (Hôm nay, Tiến trình, Lịch sử); gắn vào `MaterialApp.router`
+- [x] Theme sáng + tối theo `docs/07`; áp dụng trên app (`ThemeMode.system`)
+- [x] Setup l10n EN/VI (gen-l10n, `app_en.arb` + `app_vi.arb`) cho nhãn 3 tab
+- [x] `build_runner` chạy sạch cho Drift/Riverpod (và freezed nếu đã có model mẫu)
+- [x] CI GitHub Actions (hoặc tương đương): analyze + test
+- [x] Smoke widget/unit test tối thiểu + cập nhật trạng thái ROADMAP khi xong
 
 ## Drift table / provider / màn hình
 
@@ -51,11 +51,11 @@ Gắn stack mục tiêu vào repo và tạo xương sống chạy được: thư
 
 ## Definition of Done
 
-- [ ] `flutter analyze` không error
-- [ ] `flutter test` xanh (ít nhất: DB memory mở; smoke widget hoặc router)
-- [ ] CI config có trong repo và mô tả cách chạy local trong milestone notes / README ngắn nếu cần
-- [ ] Demo: app launch → chuyển tab/route placeholder được
-- [ ] Không có màn hình nghiệp vụ “giả hoàn chỉnh” — chỉ khung
+- [x] `flutter analyze` không error
+- [x] `flutter test` xanh (ít nhất: DB memory mở; smoke widget hoặc router)
+- [x] CI config có trong repo và mô tả cách chạy local trong milestone notes / README ngắn nếu cần
+- [x] Demo: app launch → chuyển tab/route placeholder được
+- [x] Không có màn hình nghiệp vụ “giả hoàn chỉnh” — chỉ khung
 
 ## Rủi ro và câu hỏi còn mở
 
@@ -67,3 +67,19 @@ Gắn stack mục tiêu vào repo và tạo xương sống chạy được: thư
 - l10n: `gen-l10n`, `app_en.arb` + `app_vi.arb` cho nhãn và câu trống của 3 tab. Tên region / nhóm cơ / bài không vào ARB.
 
 Không còn câu hỏi mở cho M1.
+
+## Chạy local
+
+```bash
+flutter pub get
+dart run build_runner build --delete-conflicting-outputs
+dart format --output=none --set-exit-if-changed lib test
+flutter analyze
+flutter test
+```
+
+CI giống các lệnh trên, file `.github/workflows/ci.yml`, chạy khi push và pull request. Không build iOS/Android trên CI.
+
+Schema dump nằm ở `drift_schemas/`. `dart run drift_dev make-migrations` chỉ sinh test migration khi schema lên version 2 trở đi. Version 1 được kiểm tra bằng `test/core/db/app_database_test.dart`.
+
+Máy demo chính: iOS simulator (`flutter run`). Android dùng cùng codebase.
