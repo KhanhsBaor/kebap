@@ -16,6 +16,18 @@ class CatalogDao extends DatabaseAccessor<AppDatabase> with _$CatalogDaoMixin {
     )..orderBy([(row) => OrderingTerm.asc(row.id)])).watch();
   }
 
+  Future<List<MuscleGroup>> listMuscleGroups() {
+    return (select(
+      muscleGroups,
+    )..orderBy([(row) => OrderingTerm.asc(row.id)])).get();
+  }
+
+  Future<Exercise?> findExerciseById(int id) {
+    return (select(
+      exercises,
+    )..where((row) => row.id.equals(id))).getSingleOrNull();
+  }
+
   Stream<List<MuscleGroup>> watchMuscleGroups({int? regionId}) {
     final query = select(muscleGroups)
       ..orderBy([(row) => OrderingTerm.asc(row.id)]);

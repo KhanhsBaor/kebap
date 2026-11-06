@@ -140,6 +140,13 @@ class WorkoutDao extends DatabaseAccessor<AppDatabase> with _$WorkoutDaoMixin {
     return (delete(workoutExercises)..where((row) => row.id.equals(id))).go();
   }
 
+  Future<Workout?> findInProgressWorkout() {
+    return (select(workouts)
+          ..where((row) => row.status.equalsValue(WorkoutStatus.inProgress))
+          ..limit(1))
+        .getSingleOrNull();
+  }
+
   Future<bool> hasInProgress() async {
     final row =
         await (select(workouts)

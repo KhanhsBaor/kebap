@@ -4,10 +4,14 @@ import 'package:kebap/features/catalog/domain/entities/exercise_equipment.dart';
 abstract class ExerciseRepository {
   Stream<List<Exercise>> watchByMuscleGroupIds(Set<int> muscleGroupIds);
 
+  Future<Exercise?> findById(int id);
+
   Future<Exercise?> findBySourceId(String sourceId);
 
   /// Exercise in [muscleGroupId] whose `nameEn` or `nameVi` equals [name],
-  /// ignoring case. Blocking a duplicate custom name is a use case decision.
+  /// ignoring case. Fold case in Dart. SQLite `lower()` is ASCII-only and
+  /// misses Vietnamese letters such as Đ/đ.
+  /// Blocking a duplicate custom name is a use case decision.
   Future<Exercise?> findByNameInGroup({
     required int muscleGroupId,
     required String name,

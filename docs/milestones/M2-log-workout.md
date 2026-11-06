@@ -47,7 +47,7 @@ Hoàn thành **luồng đang tập** tối thiểu — trái tim nhật ký.
 - [x] Domain entities (freezed) + repository contracts — region / muscle group / exercise / workout / set
 - [x] Seed region + đủ muscle groups theo `01`; import các dòng trong `seed/exercises.csv` đã có `kebapMuscleGroup`, `kebapEquipment` và `nameVi` (bài seed: `equipment` không null, tên EN + VI)
 - [x] Data: repository impl + mapper Drift ↔ entity
-- [ ] Use case/command: start workout, add exercise, **createCustomExercise(name, muscleGroupId)**, log/update set, finish workout
+- [x] Use case/command: start workout, add exercise, **createCustomExercise(name, muscleGroupId)**, log/update set, finish workout
 - [ ] Providers/notifiers Riverpod cho phiên đang tập (không nhét business nặng vào notifier)
 - [ ] UI: start — chọn **Upper body / Lower body / Other** → chọn một hoặc nhiều muscle group
 - [ ] UI: đang tập theo `docs/05` — bài của các nhóm đã chọn, "Lưu set", prefill, cột "Lần trước", warmup, đồng hồ nghỉ ±15 giây

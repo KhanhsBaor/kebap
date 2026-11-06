@@ -24,6 +24,12 @@ class MuscleGroupRepositoryImpl implements MuscleGroupRepository {
   }
 
   @override
+  Future<List<MuscleGroup>> listAll() async {
+    final rows = await _database.catalogDao.listMuscleGroups();
+    return [for (final row in rows) toMuscleGroup(row)];
+  }
+
+  @override
   Stream<List<MuscleGroup>> watchByRegionId(int regionId) {
     return _database.catalogDao
         .watchMuscleGroups(regionId: regionId)

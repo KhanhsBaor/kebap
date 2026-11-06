@@ -9,6 +9,9 @@ abstract class MuscleGroupRepository {
 
   Stream<List<MuscleGroup>> watchByRegionId(int regionId);
 
+  /// Every fixed muscle group. Commands use this instead of [watchAll].
+  Future<List<MuscleGroup>> listAll();
+
   Future<BodyRegion?> findRegionBySlug(String slug);
 
   Future<MuscleGroup?> findGroupBySlug(String slug);

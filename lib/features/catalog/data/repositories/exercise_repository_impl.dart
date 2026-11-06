@@ -17,6 +17,12 @@ class ExerciseRepositoryImpl implements ExerciseRepository {
   }
 
   @override
+  Future<Exercise?> findById(int id) async {
+    final row = await _database.catalogDao.findExerciseById(id);
+    return row == null ? null : toExercise(row);
+  }
+
+  @override
   Future<Exercise?> findBySourceId(String sourceId) async {
     final row = await _database.catalogDao.findExerciseBySourceId(sourceId);
     return row == null ? null : toExercise(row);

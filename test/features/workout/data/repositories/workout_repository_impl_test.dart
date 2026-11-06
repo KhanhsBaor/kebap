@@ -4,7 +4,7 @@ import 'package:kebap/core/db/app_database.dart';
 import 'package:kebap/core/db/db_enums.dart';
 import 'package:kebap/features/workout/data/repositories/workout_repository_impl.dart';
 import 'package:kebap/features/workout/domain/entities/workout_session.dart';
-import 'package:kebap/features/workout/domain/repositories/workout_repository.dart';
+import 'package:kebap/features/workout/domain/failures/workout_rule_exception.dart';
 
 void main() {
   late AppDatabase database;
@@ -269,9 +269,12 @@ void main() {
       throwsStateError,
     );
 
-    await repository.deleteSet(logged.id);
+    await repository.deleteSet(id: logged.id, positions: const {});
     expect(await database.select(database.workoutSets).get(), isEmpty);
-    await expectLater(repository.deleteSet(logged.id), throwsStateError);
+    await expectLater(
+      repository.deleteSet(id: logged.id, positions: const {}),
+      throwsStateError,
+    );
   });
 
   test(

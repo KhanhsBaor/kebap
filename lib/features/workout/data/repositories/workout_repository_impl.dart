@@ -1,9 +1,11 @@
+import 'package:drift/drift.dart';
 import 'package:kebap/core/db/app_database.dart';
 import 'package:kebap/features/workout/data/mappers/workout_mapper.dart';
 import 'package:kebap/features/workout/domain/entities/session_exercise.dart';
 import 'package:kebap/features/workout/domain/entities/set_log.dart';
 import 'package:kebap/features/workout/domain/entities/workout_session.dart';
 import 'package:kebap/features/workout/domain/entities/workout_status.dart';
+import 'package:kebap/features/workout/domain/failures/workout_rule_exception.dart';
 import 'package:kebap/features/workout/domain/repositories/workout_repository.dart';
 
 class WorkoutRepositoryImpl implements WorkoutRepository {
@@ -22,6 +24,16 @@ class WorkoutRepositoryImpl implements WorkoutRepository {
       return session;
     });
   }
+
+  @override
+  Future<WorkoutSession?> findInProgress() async {
+    final workout = await _database.workoutDao.findInProgressWorkout();
+    if (workout == null) return null;
+    return _sessionById(workout.id);
+  }
+
+  @override
+  Future<WorkoutSession?> findById(int id) => _sessionById(id);
 
   @override
   Future<WorkoutSession> insertInProgress({
@@ -77,14 +89,29 @@ class WorkoutRepositoryImpl implements WorkoutRepository {
   }
 
   @override
-  Future<void> complete({required int id, required DateTime endedAt}) async {
-    final updated = await _database.workoutDao.complete(
-      id: id,
-      endedAt: endedAt,
-    );
-    if (updated == 0) {
-      throw StateError('Workout $id was not found');
-    }
+  Future<WorkoutSession> complete({
+    required int id,
+    required DateTime endedAt,
+    List<int> dropSessionExerciseIds = const [],
+  }) async {
+    await _database.transaction(() async {
+      for (final sessionExerciseId in dropSessionExerciseIds) {
+        final deleted = await _database.workoutDao.deleteWorkoutExercise(
+          sessionExerciseId,
+        );
+        if (deleted == 0) {
+          throw StateError('Session exercise $sessionExerciseId was not found');
+        }
+      }
+      final updated = await _database.workoutDao.complete(
+        id: id,
+        endedAt: endedAt,
+      );
+      if (updated == 0) {
+        throw StateError('Workout $id was not found');
+      }
+    });
+    return (await _sessionById(id))!;
   }
 
   @override
@@ -165,11 +192,25 @@ class WorkoutRepositoryImpl implements WorkoutRepository {
   }
 
   @override
-  Future<void> deleteSet(int id) async {
-    final deleted = await _database.workoutDao.deleteSet(id);
-    if (deleted == 0) {
-      throw StateError('Set $id was not found');
-    }
+  Future<void> deleteSet({
+    required int id,
+    required Map<int, int> positions,
+  }) async {
+    await _database.transaction(() async {
+      final deleted = await _database.workoutDao.deleteSet(id);
+      if (deleted == 0) {
+        throw StateError('Set $id was not found');
+      }
+      for (final entry in positions.entries) {
+        final updated = await _database.workoutDao.updateSet(
+          entry.key,
+          WorkoutSetsCompanion(position: Value(entry.value)),
+        );
+        if (updated == 0) {
+          throw StateError('Set ${entry.key} was not found');
+        }
+      }
+    });
   }
 
   @override
