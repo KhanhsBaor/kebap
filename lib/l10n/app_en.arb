@@ -49,6 +49,18 @@
   "kgColumn": "kg",
   "repsColumn": "Reps",
   "saveSet": "Save set",
+  "saveSetFailed": "Could not save the set.",
+  "@saveSetFailed": {
+    "description": "SnackBar when logSet is rejected"
+  },
+  "undoSet": "Undo saved set",
+  "@undoSet": {
+    "description": "Semantics for the check that deletes a saved set"
+  },
+  "decreaseKg": "Decrease weight",
+  "increaseKg": "Increase weight",
+  "decreaseReps": "Decrease reps",
+  "increaseReps": "Increase reps",
   "noPreviousSession": "No previous session",
   "previousSetEmpty": "—",
   "addSet": "+ Add set",

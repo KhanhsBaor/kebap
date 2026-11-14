@@ -352,6 +352,13 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
           reps: reps,
         );
     if (!mounted) return;
+    final notice = ref.read(activeWorkoutCommandsProvider);
+    if (notice != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context).saveSetFailed)),
+      );
+      return;
+    }
     setState(() => _drafts.remove('$sessionExerciseId:$position'));
   }
 

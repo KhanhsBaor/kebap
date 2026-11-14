@@ -230,6 +230,42 @@ abstract class AppLocalizations {
   /// **'Save set'**
   String get saveSet;
 
+  /// SnackBar when logSet is rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the set.'**
+  String get saveSetFailed;
+
+  /// Semantics for the check that deletes a saved set
+  ///
+  /// In en, this message translates to:
+  /// **'Undo saved set'**
+  String get undoSet;
+
+  /// No description provided for @decreaseKg.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease weight'**
+  String get decreaseKg;
+
+  /// No description provided for @increaseKg.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase weight'**
+  String get increaseKg;
+
+  /// No description provided for @decreaseReps.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease reps'**
+  String get decreaseReps;
+
+  /// No description provided for @increaseReps.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase reps'**
+  String get increaseReps;
+
   /// No description provided for @noPreviousSession.
   ///
   /// In en, this message translates to:

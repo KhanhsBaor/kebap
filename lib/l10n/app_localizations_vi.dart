@@ -75,6 +75,24 @@ class AppLocalizationsVi extends AppLocalizations {
   String get saveSet => 'Lưu set';
 
   @override
+  String get saveSetFailed => 'Không lưu được set.';
+
+  @override
+  String get undoSet => 'Hoàn tác set đã lưu';
+
+  @override
+  String get decreaseKg => 'Giảm tạ';
+
+  @override
+  String get increaseKg => 'Tăng tạ';
+
+  @override
+  String get decreaseReps => 'Giảm rep';
+
+  @override
+  String get increaseReps => 'Tăng rep';
+
+  @override
   String get noPreviousSession => 'Chưa có lần trước';
 
   @override

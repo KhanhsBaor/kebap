@@ -75,6 +75,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saveSet => 'Save set';
 
   @override
+  String get saveSetFailed => 'Could not save the set.';
+
+  @override
+  String get undoSet => 'Undo saved set';
+
+  @override
+  String get decreaseKg => 'Decrease weight';
+
+  @override
+  String get increaseKg => 'Increase weight';
+
+  @override
+  String get decreaseReps => 'Decrease reps';
+
+  @override
+  String get increaseReps => 'Increase reps';
+
+  @override
   String get noPreviousSession => 'No previous session';
 
   @override

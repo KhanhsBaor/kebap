@@ -81,7 +81,7 @@ class SetLogRow extends StatelessWidget {
                   reps == null ? l10n.repsColumn : '$reps',
                   style: numbers.entryNumber,
                 ),
-                _check(spacing),
+                _check(spacing, l10n),
               ] else
                 _value(
                   key: Key('kg-value-$exerciseId-$position'),
@@ -99,6 +99,8 @@ class SetLogRow extends StatelessWidget {
                 _stepper(
                   minusKey: Key('kg-minus-$exerciseId-$position'),
                   plusKey: Key('kg-plus-$exerciseId-$position'),
+                  minusTooltip: l10n.decreaseKg,
+                  plusTooltip: l10n.increaseKg,
                   onMinus: () => onStepKg(-1),
                   onPlus: () => onStepKg(1),
                   spacing: spacing,
@@ -114,6 +116,8 @@ class SetLogRow extends StatelessWidget {
                 _stepper(
                   minusKey: Key('reps-minus-$exerciseId-$position'),
                   plusKey: Key('reps-plus-$exerciseId-$position'),
+                  minusTooltip: l10n.decreaseReps,
+                  plusTooltip: l10n.increaseReps,
                   onMinus: () => onStepReps(-1),
                   onPlus: () => onStepReps(1),
                   spacing: spacing,
@@ -159,12 +163,13 @@ class SetLogRow extends StatelessWidget {
     );
   }
 
-  Widget _check(KebapSpacing spacing) {
+  Widget _check(KebapSpacing spacing, AppLocalizations l10n) {
     return SizedBox(
       width: spacing.touch,
       height: spacing.touch,
       child: IconButton(
         key: Key('set-check-$exerciseId-$position'),
+        tooltip: l10n.undoSet,
         style: IconButton.styleFrom(
           minimumSize: Size(spacing.touch, spacing.touch),
           padding: EdgeInsets.zero,
@@ -204,6 +209,8 @@ class SetLogRow extends StatelessWidget {
   Widget _stepper({
     required Key minusKey,
     required Key plusKey,
+    required String minusTooltip,
+    required String plusTooltip,
     required VoidCallback onMinus,
     required VoidCallback onPlus,
     required KebapSpacing spacing,
@@ -216,6 +223,7 @@ class SetLogRow extends StatelessWidget {
           height: spacing.touch,
           child: IconButton(
             key: minusKey,
+            tooltip: minusTooltip,
             style: IconButton.styleFrom(
               minimumSize: Size(spacing.touch, spacing.touch),
               padding: EdgeInsets.zero,
@@ -230,6 +238,7 @@ class SetLogRow extends StatelessWidget {
           height: spacing.touch,
           child: IconButton(
             key: plusKey,
+            tooltip: plusTooltip,
             style: IconButton.styleFrom(
               minimumSize: Size(spacing.touch, spacing.touch),
               padding: EdgeInsets.zero,

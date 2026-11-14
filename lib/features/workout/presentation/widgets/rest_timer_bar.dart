@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:kebap/core/theme/kebap_colors.dart';
 import 'package:kebap/core/theme/kebap_spacing.dart';
 import 'package:kebap/core/theme/kebap_typography.dart';
 import 'package:kebap/features/workout/presentation/providers/rest_timer_notifier.dart';
@@ -35,6 +36,7 @@ class _RestTimerBarState extends ConsumerState<RestTimerBar> {
   @override
   Widget build(BuildContext context) {
     final spacing = Theme.of(context).extension<KebapSpacing>()!;
+    final colors = Theme.of(context).extension<KebapColors>()!;
     final numbers = Theme.of(context).extension<KebapTypography>()!;
     final l10n = AppLocalizations.of(context);
     final endsAt = ref.watch(restTimerProvider);
@@ -45,7 +47,7 @@ class _RestTimerBarState extends ConsumerState<RestTimerBar> {
     final timer = ref.read(restTimerProvider.notifier);
 
     return Material(
-      color: Theme.of(context).colorScheme.surface,
+      color: colors.surface,
       child: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: spacing.md,
