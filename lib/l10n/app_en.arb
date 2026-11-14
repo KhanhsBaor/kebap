@@ -14,5 +14,32 @@
   },
   "todayEmpty": "No workout yet.",
   "progressEmpty": "Charts will appear after a completed workout.",
-  "historyEmpty": "Completed workouts will show up here."
+  "historyEmpty": "Completed workouts will show up here.",
+  "startWorkoutTitle": "Start a workout",
+  "@startWorkoutTitle": {
+    "description": "Title of the screen where a workout's muscle groups are chosen"
+  },
+  "startWorkoutAction": "Start workout",
+  "@startWorkoutAction": {
+    "description": "Primary button that creates an in-progress workout"
+  },
+  "noMuscleGroups": "No muscle groups yet.",
+  "@noMuscleGroups": {
+    "description": "Empty catalog on the start-workout screen"
+  },
+  "workoutInProgressTitle": "You have a workout in progress",
+  "@workoutInProgressTitle": {
+    "description": "Dialog shown when opening start while a session is already open"
+  },
+  "continueWorkout": "Continue",
+  "@continueWorkout": {
+    "description": "Primary action on Today when a workout is already in progress"
+  },
+  "continueThatWorkout": "Continue that workout",
+  "discardAndStartNew": "Discard and start a new one",
+  "activeWorkoutTitle": "Workout",
+  "@activeWorkoutTitle": {
+    "description": "Title of the in-progress workout screen"
+  },
+  "startWorkoutFailed": "Could not start the workout."
 }

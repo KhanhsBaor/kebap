@@ -25,4 +25,31 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get historyEmpty => 'Buổi đã hoàn thành sẽ nằm ở đây.';
+
+  @override
+  String get startWorkoutTitle => 'Bắt đầu buổi';
+
+  @override
+  String get startWorkoutAction => 'Bắt đầu buổi tập';
+
+  @override
+  String get noMuscleGroups => 'Chưa có nhóm cơ.';
+
+  @override
+  String get workoutInProgressTitle => 'Bạn đang có buổi tập dở';
+
+  @override
+  String get continueWorkout => 'Tiếp tục';
+
+  @override
+  String get continueThatWorkout => 'Tiếp tục buổi đó';
+
+  @override
+  String get discardAndStartNew => 'Hủy và bắt đầu buổi mới';
+
+  @override
+  String get activeWorkoutTitle => 'Đang tập';
+
+  @override
+  String get startWorkoutFailed => 'Không bắt đầu được buổi tập.';
 }

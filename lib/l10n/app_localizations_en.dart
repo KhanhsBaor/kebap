@@ -25,4 +25,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get historyEmpty => 'Completed workouts will show up here.';
+
+  @override
+  String get startWorkoutTitle => 'Start a workout';
+
+  @override
+  String get startWorkoutAction => 'Start workout';
+
+  @override
+  String get noMuscleGroups => 'No muscle groups yet.';
+
+  @override
+  String get workoutInProgressTitle => 'You have a workout in progress';
+
+  @override
+  String get continueWorkout => 'Continue';
+
+  @override
+  String get continueThatWorkout => 'Continue that workout';
+
+  @override
+  String get discardAndStartNew => 'Discard and start a new one';
+
+  @override
+  String get activeWorkoutTitle => 'Workout';
+
+  @override
+  String get startWorkoutFailed => 'Could not start the workout.';
 }

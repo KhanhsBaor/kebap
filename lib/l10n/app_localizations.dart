@@ -133,6 +133,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Completed workouts will show up here.'**
   String get historyEmpty;
+
+  /// Title of the screen where a workout's muscle groups are chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Start a workout'**
+  String get startWorkoutTitle;
+
+  /// Primary button that creates an in-progress workout
+  ///
+  /// In en, this message translates to:
+  /// **'Start workout'**
+  String get startWorkoutAction;
+
+  /// Empty catalog on the start-workout screen
+  ///
+  /// In en, this message translates to:
+  /// **'No muscle groups yet.'**
+  String get noMuscleGroups;
+
+  /// Dialog shown when opening start while a session is already open
+  ///
+  /// In en, this message translates to:
+  /// **'You have a workout in progress'**
+  String get workoutInProgressTitle;
+
+  /// Primary action on Today when a workout is already in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueWorkout;
+
+  /// No description provided for @continueThatWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue that workout'**
+  String get continueThatWorkout;
+
+  /// No description provided for @discardAndStartNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard and start a new one'**
+  String get discardAndStartNew;
+
+  /// Title of the in-progress workout screen
+  ///
+  /// In en, this message translates to:
+  /// **'Workout'**
+  String get activeWorkoutTitle;
+
+  /// No description provided for @startWorkoutFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start the workout.'**
+  String get startWorkoutFailed;
 }
 
 class _AppLocalizationsDelegate

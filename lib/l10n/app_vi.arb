@@ -5,5 +5,14 @@
   "historyLabel": "Lịch sử",
   "todayEmpty": "Chưa có buổi tập.",
   "progressEmpty": "Chart sẽ hiện sau khi có buổi đã hoàn thành.",
-  "historyEmpty": "Buổi đã hoàn thành sẽ nằm ở đây."
+  "historyEmpty": "Buổi đã hoàn thành sẽ nằm ở đây.",
+  "startWorkoutTitle": "Bắt đầu buổi",
+  "startWorkoutAction": "Bắt đầu buổi tập",
+  "noMuscleGroups": "Chưa có nhóm cơ.",
+  "workoutInProgressTitle": "Bạn đang có buổi tập dở",
+  "continueWorkout": "Tiếp tục",
+  "continueThatWorkout": "Tiếp tục buổi đó",
+  "discardAndStartNew": "Hủy và bắt đầu buổi mới",
+  "activeWorkoutTitle": "Đang tập",
+  "startWorkoutFailed": "Không bắt đầu được buổi tập."
 }

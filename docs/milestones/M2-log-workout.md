@@ -49,7 +49,7 @@ Hoàn thành **luồng đang tập** tối thiểu — trái tim nhật ký.
 - [x] Data: repository impl + mapper Drift ↔ entity
 - [x] Use case/command: start workout, add exercise, **createCustomExercise(name, muscleGroupId)**, log/update set, finish workout
 - [x] Providers/notifiers Riverpod cho phiên đang tập (không nhét business nặng vào notifier)
-- [ ] UI: start — chọn **Upper body / Lower body / Other** → chọn một hoặc nhiều muscle group
+- [x] UI: start — chọn **Upper body / Lower body / Other** → chọn một hoặc nhiều muscle group
 - [ ] UI: đang tập theo `docs/05` — bài của các nhóm đã chọn, "Lưu set", prefill, cột "Lần trước", warmup, đồng hồ nghỉ ±15 giây
 - [ ] UI: Home — banner "Buổi đang dở" (Tiếp tục / Hủy buổi) khi có `in_progress`; không tự mở màn tập
 - [ ] UI: tạo custom exercise — mặc định nhóm đang xem, chip đổi sang nhóm khác của buổi; thêm ngay vào buổi. Tên trùng y hệt (không phân biệt hoa thường) trong cùng nhóm thì chặn và gợi ý bài có sẵn. Không cho thêm bài ngoài các nhóm của buổi.
