@@ -52,4 +52,62 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get startWorkoutFailed => 'Không bắt đầu được buổi tập.';
+
+  @override
+  String get discardWorkout => 'Hủy buổi tập';
+
+  @override
+  String get finishWorkout => 'Kết thúc';
+
+  @override
+  String get setColumn => 'Set';
+
+  @override
+  String get previousColumn => 'Lần trước';
+
+  @override
+  String get kgColumn => 'kg';
+
+  @override
+  String get repsColumn => 'Reps';
+
+  @override
+  String get saveSet => 'Lưu set';
+
+  @override
+  String get noPreviousSession => 'Chưa có lần trước';
+
+  @override
+  String get previousSetEmpty => '—';
+
+  @override
+  String get addSet => '+ Thêm set';
+
+  @override
+  String get warmupMark => 'W';
+
+  @override
+  String get skipRest => 'Bỏ qua';
+
+  @override
+  String kgComparedWithPrevious(String delta) {
+    return '$delta kg so với lần trước';
+  }
+
+  @override
+  String repsComparedWithPrevious(String delta) {
+    return '$delta rep so với lần trước';
+  }
+
+  @override
+  String get noExercisesInWorkout => 'Chưa có bài trong buổi.';
+
+  @override
+  String get addExercise => 'Thêm bài';
+
+  @override
+  String get searchExercises => 'Tìm theo tên';
+
+  @override
+  String get createExercise => 'Tạo bài mới';
 }

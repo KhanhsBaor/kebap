@@ -52,4 +52,62 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get startWorkoutFailed => 'Could not start the workout.';
+
+  @override
+  String get discardWorkout => 'Discard workout';
+
+  @override
+  String get finishWorkout => 'Finish';
+
+  @override
+  String get setColumn => 'Set';
+
+  @override
+  String get previousColumn => 'Previous';
+
+  @override
+  String get kgColumn => 'kg';
+
+  @override
+  String get repsColumn => 'Reps';
+
+  @override
+  String get saveSet => 'Save set';
+
+  @override
+  String get noPreviousSession => 'No previous session';
+
+  @override
+  String get previousSetEmpty => '—';
+
+  @override
+  String get addSet => '+ Add set';
+
+  @override
+  String get warmupMark => 'W';
+
+  @override
+  String get skipRest => 'Skip';
+
+  @override
+  String kgComparedWithPrevious(String delta) {
+    return '$delta kg vs last time';
+  }
+
+  @override
+  String repsComparedWithPrevious(String delta) {
+    return '$delta reps vs last time';
+  }
+
+  @override
+  String get noExercisesInWorkout => 'No exercises in this workout yet.';
+
+  @override
+  String get addExercise => 'Add exercise';
+
+  @override
+  String get searchExercises => 'Search by name';
+
+  @override
+  String get createExercise => 'Create exercise';
 }

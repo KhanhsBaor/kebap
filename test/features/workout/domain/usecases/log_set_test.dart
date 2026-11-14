@@ -81,22 +81,20 @@ void main() {
     ).called(1);
   });
 
-  test('stores a warmup set with null kg and reps', () async {
-    when(
-      () => workouts.findById(1),
-    ).thenAnswer((_) async => workoutSession(exercises: [sessionExercise()]));
-
-    await useCase.call(workoutId: 1, sessionExerciseId: 100, isWarmup: true);
-
-    verify(
+  test('throws when kg and reps are both empty and does not insert', () async {
+    await expectLater(
+      useCase.call(workoutId: 1, sessionExerciseId: 100, isWarmup: true),
+      throwsA(isA<InvalidSetValue>()),
+    );
+    verifyNever(
       () => workouts.insertSet(
-        sessionExerciseId: 100,
-        position: 1,
-        isWarmup: true,
-        kg: null,
-        reps: null,
+        sessionExerciseId: any(named: 'sessionExerciseId'),
+        position: any(named: 'position'),
+        isWarmup: any(named: 'isWarmup'),
+        kg: any(named: 'kg'),
+        reps: any(named: 'reps'),
       ),
-    ).called(1);
+    );
   });
 
   test('stores a bodyweight set at kg 0', () async {

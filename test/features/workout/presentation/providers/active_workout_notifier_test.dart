@@ -65,7 +65,10 @@ void main() {
       expect(saved.muscleGroupIds, [catalog.chestId, catalog.tricepsId]);
       expect(saved.exercises.single.sets.map((set) => set.position), [1, 2]);
       expect(saved.exercises.single.sets.map((set) => set.reps), [10, 8]);
-      expect(first.read(restTimerProvider), RestTimerNotifier.defaultSeconds);
+      expect(
+        first.read(restTimerProvider.notifier).remainingSeconds(),
+        RestTimerNotifier.defaultSeconds,
+      );
 
       first.listen(activeWorkoutExercisesProvider, (_, _) {});
       final exercises = await first.read(activeWorkoutExercisesProvider.future);
@@ -244,7 +247,10 @@ void main() {
     expect(await database.select(database.workouts).get(), isEmpty);
     expect(await database.select(database.workoutSets).get(), isEmpty);
     expect(await database.select(database.workoutExercises).get(), isEmpty);
-    expect(container.read(restTimerProvider), isNull);
+    expect(
+      container.read(restTimerProvider.notifier).remainingSeconds(),
+      isNull,
+    );
   });
 
   test(
@@ -326,9 +332,17 @@ void main() {
   });
 }
 
+final _restClock = DateTime.utc(2026, 11, 14, 8);
+
 ProviderContainer _container(AppDatabase database) {
   return ProviderContainer(
-    overrides: [appDatabaseProvider.overrideWith((ref) => database)],
+    overrides: [
+      appDatabaseProvider.overrideWith((ref) => database),
+      workoutClockProvider.overrideWith(
+        (ref) =>
+            () => _restClock,
+      ),
+    ],
   );
 }
 

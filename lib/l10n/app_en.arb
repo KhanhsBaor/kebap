@@ -41,5 +41,33 @@
   "@activeWorkoutTitle": {
     "description": "Title of the in-progress workout screen"
   },
-  "startWorkoutFailed": "Could not start the workout."
+  "startWorkoutFailed": "Could not start the workout.",
+  "discardWorkout": "Discard workout",
+  "finishWorkout": "Finish",
+  "setColumn": "Set",
+  "previousColumn": "Previous",
+  "kgColumn": "kg",
+  "repsColumn": "Reps",
+  "saveSet": "Save set",
+  "noPreviousSession": "No previous session",
+  "previousSetEmpty": "—",
+  "addSet": "+ Add set",
+  "warmupMark": "W",
+  "skipRest": "Skip",
+  "kgComparedWithPrevious": "{delta} kg vs last time",
+  "@kgComparedWithPrevious": {
+    "placeholders": {
+      "delta": {"type": "String"}
+    }
+  },
+  "repsComparedWithPrevious": "{delta} reps vs last time",
+  "@repsComparedWithPrevious": {
+    "placeholders": {
+      "delta": {"type": "String"}
+    }
+  },
+  "noExercisesInWorkout": "No exercises in this workout yet.",
+  "addExercise": "Add exercise",
+  "searchExercises": "Search by name",
+  "createExercise": "Create exercise"
 }

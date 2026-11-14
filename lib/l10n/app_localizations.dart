@@ -187,6 +187,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not start the workout.'**
   String get startWorkoutFailed;
+
+  /// No description provided for @discardWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard workout'**
+  String get discardWorkout;
+
+  /// No description provided for @finishWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get finishWorkout;
+
+  /// No description provided for @setColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get setColumn;
+
+  /// No description provided for @previousColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previousColumn;
+
+  /// No description provided for @kgColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get kgColumn;
+
+  /// No description provided for @repsColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Reps'**
+  String get repsColumn;
+
+  /// No description provided for @saveSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Save set'**
+  String get saveSet;
+
+  /// No description provided for @noPreviousSession.
+  ///
+  /// In en, this message translates to:
+  /// **'No previous session'**
+  String get noPreviousSession;
+
+  /// No description provided for @previousSetEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'—'**
+  String get previousSetEmpty;
+
+  /// No description provided for @addSet.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add set'**
+  String get addSet;
+
+  /// No description provided for @warmupMark.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get warmupMark;
+
+  /// No description provided for @skipRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skipRest;
+
+  /// No description provided for @kgComparedWithPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'{delta} kg vs last time'**
+  String kgComparedWithPrevious(String delta);
+
+  /// No description provided for @repsComparedWithPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'{delta} reps vs last time'**
+  String repsComparedWithPrevious(String delta);
+
+  /// No description provided for @noExercisesInWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises in this workout yet.'**
+  String get noExercisesInWorkout;
+
+  /// No description provided for @addExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Add exercise'**
+  String get addExercise;
+
+  /// No description provided for @searchExercises.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name'**
+  String get searchExercises;
+
+  /// No description provided for @createExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Create exercise'**
+  String get createExercise;
 }
 
 class _AppLocalizationsDelegate

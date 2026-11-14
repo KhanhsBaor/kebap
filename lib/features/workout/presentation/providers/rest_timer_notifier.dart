@@ -2,42 +2,51 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'rest_timer_notifier.g.dart';
 
+/// Clock for the rest countdown. Tests override this so they do not wait.
+@riverpod
+DateTime Function() workoutClock(Ref ref) => DateTime.now;
+
 /// In-memory rest countdown. Null means the timer is hidden.
 ///
-/// Stores remaining seconds only — no wall clock. The screen drives the
-/// 1 Hz countdown with [tick] (Ticker / periodic callback). [addStep] and
-/// [subtractStep] are the ±15 second buttons from docs/05. Default 90
-/// seconds is the general-health row in docs/01. Nothing is written to
-/// the database; kill app drops this state (docs/06).
+/// The stored value is the moment the rest ends, not a tick count, so a
+/// gap in the background does not drift the display. Nothing is written
+/// to the database; killing the app drops this state (docs/06).
 @riverpod
 class RestTimerNotifier extends _$RestTimerNotifier {
   static const defaultSeconds = 90;
   static const stepSeconds = 15;
 
   @override
-  int? build() => null;
+  DateTime? build() => null;
 
-  void start() => state = defaultSeconds;
+  /// Whole seconds left, or null when the timer is hidden. Zero means
+  /// the rest has finished and the bar is still visible.
+  int? remainingSeconds() {
+    final endsAt = state;
+    if (endsAt == null) return null;
+    final seconds = endsAt.difference(_now()).inSeconds;
+    return seconds < 0 ? 0 : seconds;
+  }
 
-  /// One second of countdown. No-op when hidden. Stops at 0.
-  void tick() {
-    final current = state;
-    if (current == null || current <= 0) return;
-    state = current - 1;
+  void start() {
+    state = _now().add(const Duration(seconds: defaultSeconds));
   }
 
   void addStep() {
-    final current = state;
-    if (current == null) return;
-    state = current + stepSeconds;
+    final endsAt = state;
+    if (endsAt == null) return;
+    state = endsAt.add(const Duration(seconds: stepSeconds));
   }
 
   void subtractStep() {
-    final current = state;
-    if (current == null) return;
-    final next = current - stepSeconds;
-    state = next < 0 ? 0 : next;
+    final endsAt = state;
+    if (endsAt == null) return;
+    final next = endsAt.subtract(const Duration(seconds: stepSeconds));
+    final now = _now();
+    state = next.isBefore(now) ? now : next;
   }
 
   void dismiss() => state = null;
+
+  DateTime _now() => ref.read(workoutClockProvider)();
 }

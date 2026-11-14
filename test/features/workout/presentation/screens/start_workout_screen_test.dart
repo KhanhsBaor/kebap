@@ -6,6 +6,7 @@ import 'package:kebap/core/router/app_routes.dart';
 import 'package:kebap/core/theme/kebap_colors.dart';
 import 'package:kebap/core/theme/kebap_theme.dart';
 import 'package:kebap/features/catalog/domain/entities/body_region.dart';
+import 'package:kebap/features/catalog/domain/entities/exercise.dart';
 import 'package:kebap/features/catalog/domain/entities/muscle_group.dart';
 import 'package:kebap/features/catalog/presentation/providers/catalog_providers.dart';
 import 'package:kebap/features/today/presentation/screens/today_screen.dart';
@@ -13,6 +14,7 @@ import 'package:kebap/features/workout/domain/entities/workout_session.dart';
 import 'package:kebap/features/workout/domain/entities/workout_status.dart';
 import 'package:kebap/features/workout/presentation/notices/active_workout_notice.dart';
 import 'package:kebap/features/workout/presentation/providers/active_workout.dart';
+import 'package:kebap/features/workout/presentation/providers/active_workout_exercises.dart';
 import 'package:kebap/features/workout/presentation/providers/active_workout_notifier.dart';
 import 'package:kebap/features/workout/presentation/screens/active_workout_screen.dart';
 import 'package:kebap/features/workout/presentation/screens/start_workout_screen.dart';
@@ -270,7 +272,10 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('today-start-workout')), findsNothing);
-    expect(find.byKey(const ValueKey('today-continue-workout')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('today-continue-workout')),
+      findsOneWidget,
+    );
 
     await tester.tap(find.byKey(const ValueKey('today-continue-workout')));
     await tester.pumpAndSettle();
@@ -315,6 +320,9 @@ Widget _scope({
         (ref) => Stream.value(const [_chest, _triceps, _quads]),
       ),
       activeWorkoutProvider.overrideWith((ref) => Stream.value(session)),
+      activeWorkoutExercisesProvider.overrideWith(
+        (ref) => Stream.value(const <Exercise>[]),
+      ),
       activeWorkoutCommandsProvider.overrideWith(_RecordingCommands.new),
     ],
     child: MaterialApp.router(

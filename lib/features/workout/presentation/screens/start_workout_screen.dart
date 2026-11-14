@@ -64,9 +64,8 @@ class _StartWorkoutScreenState extends ConsumerState<StartWorkoutScreen> {
       key: const ValueKey('start-workout-screen'),
       appBar: AppBar(title: Text(l10n.startWorkoutTitle)),
       body: switch ((regionsAsync, groupsAsync, regions, groups)) {
-        (AsyncError(), _, _, _) || (_, AsyncError(), _, _) => _EmptyCatalog(
-          message: l10n.noMuscleGroups,
-        ),
+        (AsyncError(), _, _, _) ||
+        (_, AsyncError(), _, _) => _EmptyCatalog(message: l10n.noMuscleGroups),
         (_, _, final regions?, final groups?)
             when regions.isEmpty || groups.isEmpty =>
           _EmptyCatalog(message: l10n.noMuscleGroups),

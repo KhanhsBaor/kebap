@@ -50,29 +50,23 @@ void main() {
     ).called(1);
   });
 
-  test('allows clearing kg and reps', () async {
-    when(() => workouts.findById(1)).thenAnswer(
-      (_) async => workoutSession(
-        exercises: [
-          sessionExercise(sets: [setLog(id: 7, position: 1)]),
-        ],
-      ),
-    );
-    when(
-      () => workouts.updateSet(
-        id: any(named: 'id'),
-        isWarmup: any(named: 'isWarmup'),
-        kg: any(named: 'kg'),
-        reps: any(named: 'reps'),
-      ),
-    ).thenAnswer((_) async => setLog(id: 7, position: 1, kg: null, reps: null));
-
-    await useCase.call(workoutId: 1, setId: 7, isWarmup: false);
-
-    verify(
-      () => workouts.updateSet(id: 7, isWarmup: false, kg: null, reps: null),
-    ).called(1);
-  });
+  test(
+    'throws when kg and reps are both cleared and does not update',
+    () async {
+      await expectLater(
+        useCase.call(workoutId: 1, setId: 7, isWarmup: false),
+        throwsA(isA<InvalidSetValue>()),
+      );
+      verifyNever(
+        () => workouts.updateSet(
+          id: any(named: 'id'),
+          isWarmup: any(named: 'isWarmup'),
+          kg: any(named: 'kg'),
+          reps: any(named: 'reps'),
+        ),
+      );
+    },
+  );
 
   test('throws when kg is negative and does not update', () async {
     await expectLater(

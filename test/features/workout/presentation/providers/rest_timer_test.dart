@@ -3,62 +3,73 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kebap/features/workout/presentation/providers/rest_timer_notifier.dart';
 
 void main() {
-  test('starts at the default, steps by 15 seconds, and dismisses', () {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
-    final timer = container.read(restTimerProvider.notifier);
+  final now = DateTime.utc(2026, 11, 14, 10);
 
-    expect(container.read(restTimerProvider), isNull);
+  ProviderContainer container() {
+    final scope = ProviderContainer(
+      overrides: [
+        workoutClockProvider.overrideWith(
+          (ref) =>
+              () => now,
+        ),
+      ],
+    );
+    addTearDown(scope.dispose);
+    return scope;
+  }
+
+  test('starts at the default, steps by 15 seconds, and dismisses', () {
+    final scope = container();
+    final timer = scope.read(restTimerProvider.notifier);
+
+    expect(timer.remainingSeconds(), isNull);
 
     timer.start();
-    expect(container.read(restTimerProvider), RestTimerNotifier.defaultSeconds);
+    expect(timer.remainingSeconds(), RestTimerNotifier.defaultSeconds);
 
     timer.addStep();
     expect(
-      container.read(restTimerProvider),
+      timer.remainingSeconds(),
       RestTimerNotifier.defaultSeconds + RestTimerNotifier.stepSeconds,
     );
 
     timer.subtractStep();
     timer.subtractStep();
     expect(
-      container.read(restTimerProvider),
+      timer.remainingSeconds(),
       RestTimerNotifier.defaultSeconds - RestTimerNotifier.stepSeconds,
     );
 
     timer.dismiss();
-    expect(container.read(restTimerProvider), isNull);
+    expect(timer.remainingSeconds(), isNull);
     timer.addStep();
-    expect(container.read(restTimerProvider), isNull);
+    expect(timer.remainingSeconds(), isNull);
   });
 
-  test('tick counts down one second and stops at zero', () {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
-    final timer = container.read(restTimerProvider.notifier);
-
-    timer.tick();
-    expect(container.read(restTimerProvider), isNull);
+  test('remaining follows the clock instead of a tick count', () {
+    var clock = DateTime.utc(2026, 11, 14, 10);
+    final scope = ProviderContainer(
+      overrides: [
+        workoutClockProvider.overrideWith(
+          (ref) =>
+              () => clock,
+        ),
+      ],
+    );
+    addTearDown(scope.dispose);
+    final timer = scope.read(restTimerProvider.notifier);
 
     timer.start();
-    timer.tick();
-    expect(
-      container.read(restTimerProvider),
-      RestTimerNotifier.defaultSeconds - 1,
-    );
+    clock = clock.add(const Duration(seconds: 1));
+    expect(timer.remainingSeconds(), RestTimerNotifier.defaultSeconds - 1);
 
-    for (var index = 0; index < RestTimerNotifier.defaultSeconds; index++) {
-      timer.tick();
-    }
-    expect(container.read(restTimerProvider), 0);
-    timer.tick();
-    expect(container.read(restTimerProvider), 0);
+    clock = clock.add(Duration(seconds: RestTimerNotifier.defaultSeconds));
+    expect(timer.remainingSeconds(), 0);
   });
 
   test('subtract stops at zero', () {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
-    final timer = container.read(restTimerProvider.notifier);
+    final scope = container();
+    final timer = scope.read(restTimerProvider.notifier);
 
     timer.start();
     final steps =
@@ -67,6 +78,6 @@ void main() {
       timer.subtractStep();
     }
 
-    expect(container.read(restTimerProvider), 0);
+    expect(timer.remainingSeconds(), 0);
   });
 }
