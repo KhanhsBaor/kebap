@@ -144,7 +144,7 @@ final class CreateCustomExerciseProvider
 }
 
 String _$createCustomExerciseHash() =>
-    r'67888546f53fbe81ddd6e4fe8b7784b158e5dee4';
+    r'cb9bf5f9fa992c2c5d89d3dcf1816a56a8a76a50';
 
 @ProviderFor(logSet)
 final logSetProvider = LogSetProvider._();

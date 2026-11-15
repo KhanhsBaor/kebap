@@ -20,6 +20,7 @@ void main() {
     useCase = CreateCustomExercise(
       workoutRepository: workouts,
       exerciseRepository: exercises,
+      transactionRunner: const PassthroughTransactionRunner(),
     );
     when(() => workouts.findById(1)).thenAnswer((_) async => workoutSession());
   });

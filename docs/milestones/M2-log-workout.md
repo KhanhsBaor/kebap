@@ -52,7 +52,7 @@ Hoàn thành **luồng đang tập** tối thiểu — trái tim nhật ký.
 - [x] UI: start — chọn **Upper body / Lower body / Other** → chọn một hoặc nhiều muscle group
 - [x] UI: đang tập theo `docs/05` — bài của các nhóm đã chọn, "Lưu set", prefill, cột "Lần trước", warmup, đồng hồ nghỉ ±15 giây
 - [x] UI: Home — banner "Buổi đang dở" (Tiếp tục / Hủy buổi) khi có `in_progress`; không tự mở màn tập
-- [ ] UI: tạo custom exercise — mặc định nhóm đang xem, chip đổi sang nhóm khác của buổi; thêm ngay vào buổi. Tên trùng y hệt (không phân biệt hoa thường) trong cùng nhóm thì chặn và gợi ý bài có sẵn. Không cho thêm bài ngoài các nhóm của buổi.
+- [x] UI: tạo custom exercise — mặc định nhóm đang xem, chip đổi sang nhóm khác của buổi; thêm ngay vào buổi. Tên trùng y hệt (không phân biệt hoa thường) trong cùng nhóm thì chặn và gợi ý bài có sẵn. Không cho thêm bài ngoài các nhóm của buổi.
 - [ ] UI: hủy và kết thúc theo `docs/06` mục 4–5 (0 set không cho kết thúc; còn set dự kiến thì hỏi)
 - [ ] Widget test: đếm `tester.tap` theo ngân sách `docs/05` mục 2; vùng chạm tối thiểu 48 dp
 - [ ] Test: DAO seed + custom; filter by `muscleGroupId`; chặn tên custom trùng trong cùng nhóm; unit test volume theo `03`

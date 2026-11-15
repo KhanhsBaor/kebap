@@ -46,22 +46,38 @@ class ActiveWorkoutCommands extends _$ActiveWorkoutCommands {
     });
   }
 
-  Future<void> addExercise({required int exerciseId}) {
-    return _run(() async {
-      final session = _session();
-      if (session == null) return;
-      await ref
+  /// Appends [exerciseId] and returns the new session-exercise id, or null
+  /// when the command failed.
+  Future<int?> addExercise({required int exerciseId}) async {
+    final session = _session();
+    if (session == null) return null;
+    try {
+      final added = await ref
           .read(addExerciseToWorkoutProvider)
           .call(workoutId: session.id, exerciseId: exerciseId);
-    });
+      if (!ref.mounted) return null;
+      state = null;
+      return added.id;
+    } on WorkoutRuleException catch (error) {
+      if (!ref.mounted) return null;
+      state = ActiveWorkoutRejected(error);
+      return null;
+    } catch (_) {
+      if (!ref.mounted) return null;
+      state = const ActiveWorkoutSaveFailed();
+      return null;
+    }
   }
 
-  Future<void> createCustomExercise({
+  /// Creates a custom exercise, appends it, and returns the new
+  /// session-exercise id. Null when the name is a duplicate or the write
+  /// failed (see [state]).
+  Future<int?> createCustomExercise({
     required String name,
     required int muscleGroupId,
   }) async {
     final session = _session();
-    if (session == null) return;
+    if (session == null) return null;
     try {
       final result = await ref
           .read(createCustomExerciseProvider)
@@ -70,16 +86,23 @@ class ActiveWorkoutCommands extends _$ActiveWorkoutCommands {
             name: name,
             muscleGroupId: muscleGroupId,
           );
-      if (!ref.mounted) return;
+      if (!ref.mounted) return null;
       switch (result) {
-        case CustomExerciseCreated():
+        case CustomExerciseCreated(:final sessionExercise):
           state = null;
+          return sessionExercise.id;
         case CustomExerciseDuplicate(:final exercise):
           state = ActiveWorkoutDuplicateName(exercise);
+          return null;
       }
     } on WorkoutRuleException catch (error) {
-      if (!ref.mounted) return;
+      if (!ref.mounted) return null;
       state = ActiveWorkoutRejected(error);
+      return null;
+    } catch (_) {
+      if (!ref.mounted) return null;
+      state = const ActiveWorkoutSaveFailed();
+      return null;
     }
   }
 

@@ -31,3 +31,8 @@ final class ActiveWorkoutRejected extends ActiveWorkoutNotice {
 
   final WorkoutRuleException failure;
 }
+
+/// Catalog or workout write failed for a reason outside the domain rules.
+final class ActiveWorkoutSaveFailed extends ActiveWorkoutNotice {
+  const ActiveWorkoutSaveFailed();
+}

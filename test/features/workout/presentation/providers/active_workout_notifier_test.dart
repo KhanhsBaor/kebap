@@ -1,4 +1,4 @@
-import 'package:drift/drift.dart' hide isNull;
+import 'package:drift/drift.dart' hide isNull, isNotNull;
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -320,11 +320,12 @@ void main() {
       );
       await _waitFor(container, (_) => true);
 
-      await notifier.createCustomExercise(
+      final id = await notifier.createCustomExercise(
         name: '  bench press  ',
         muscleGroupId: catalog.chestId,
       );
 
+      expect(id, isNull);
       final notice = container.read(activeWorkoutCommandsProvider);
       expect(notice, isA<ActiveWorkoutDuplicateName>());
       expect(
@@ -335,6 +336,38 @@ void main() {
       expect(session.exercises, isEmpty);
     },
   );
+
+  test('createCustomExercise returns the new session exercise id', () async {
+    final container = _container(database);
+    addTearDown(container.dispose);
+    _listen(container);
+    final notifier = container.read(activeWorkoutCommandsProvider.notifier);
+
+    await notifier.startWorkout(
+      regionId: catalog.regionId,
+      muscleGroupIds: [catalog.chestId],
+    );
+    await _waitFor(container, (_) => true);
+
+    final id = await notifier.createCustomExercise(
+      name: 'Cable Fly Low',
+      muscleGroupId: catalog.chestId,
+    );
+
+    expect(id, isNotNull);
+    final session = await _waitFor(
+      container,
+      (session) => session.exercises.isNotEmpty,
+    );
+    expect(session.exercises.single.id, id);
+    expect(session.exercises.single.exerciseId, isNot(catalog.benchId));
+    final custom = await (database.select(
+      database.exercises,
+    )..where((row) => row.isCustom.equals(true))).getSingle();
+    expect(custom.nameEn, 'Cable Fly Low');
+    expect(custom.muscleGroupId, catalog.chestId);
+    expect(custom.equipment, isNull);
+  });
 
   test('previousSets returns the completed session of that exercise', () async {
     final container = _container(database);

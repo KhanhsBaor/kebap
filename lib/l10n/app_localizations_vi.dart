@@ -130,6 +130,24 @@ class AppLocalizationsVi extends AppLocalizations {
   String get createExercise => 'Tạo bài mới';
 
   @override
+  String get exerciseNameLabel => 'Tên bài';
+
+  @override
+  String get addToWorkout => 'Thêm vào buổi';
+
+  @override
+  String get duplicateExerciseInGroup => 'Đã có bài này trong nhóm.';
+
+  @override
+  String get useExistingExercise => 'Dùng bài có sẵn';
+
+  @override
+  String get customExerciseSaveFailed => 'Không lưu được bài. Thử lại.';
+
+  @override
+  String get muscleGroupLabel => 'Nhóm cơ';
+
+  @override
   String get inProgressBannerTitle => 'Buổi đang dở';
 
   @override

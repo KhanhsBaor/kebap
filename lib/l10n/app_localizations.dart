@@ -332,6 +332,42 @@ abstract class AppLocalizations {
   /// **'Create exercise'**
   String get createExercise;
 
+  /// No description provided for @exerciseNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise name'**
+  String get exerciseNameLabel;
+
+  /// No description provided for @addToWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to workout'**
+  String get addToWorkout;
+
+  /// No description provided for @duplicateExerciseInGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'This exercise is already in the group.'**
+  String get duplicateExerciseInGroup;
+
+  /// No description provided for @useExistingExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the existing exercise'**
+  String get useExistingExercise;
+
+  /// No description provided for @customExerciseSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the exercise. Try again.'**
+  String get customExerciseSaveFailed;
+
+  /// No description provided for @muscleGroupLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Muscle group'**
+  String get muscleGroupLabel;
+
   /// No description provided for @inProgressBannerTitle.
   ///
   /// In en, this message translates to:

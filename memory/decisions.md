@@ -4,6 +4,7 @@ INDEX — mới nhất ở trên. Khi file vượt ~300 dòng, chuyển entry c�
 
 | Date | Tiêu đề |
 |------|---------|
+| 2026-11-15 | M2 task 10: S06 sheet custom; nhóm theo section đang nhìn thấy; prefill từ ô tìm; create+add trong một transaction |
 | 2026-11-15 | M2 task 9: schema v2 thêm `sets.savedAt`; buổi quá 6 giờ tính từ set cuối |
 | 2026-11-05 | M2: không thêm bài ngoài buổi; custom gắn nhóm đang xem; trùng tên thì chặn |
 | 2026-11-05 | M1: CI GitHub Actions, schema v1, iOS simulator, l10n EN/VI |
@@ -22,6 +23,10 @@ INDEX — mới nhất ở trên. Khi file vượt ~300 dòng, chuyển entry c�
 | 2026-10-23 | Offline-first Drift; UI không đụng Drift generated |
 
 ---
+
+### [2026-11-15] M2 task 10: S06 sheet custom; nhóm theo section đang nhìn thấy; prefill từ ô tìm; create+add trong một transaction
+
+**Context:** Sheet thêm bài không có tab/filter theo nhóm; task 5 yêu cầu create+add trong một transaction nhưng chưa làm. **Decision:** S06 là bottom sheet chồng lên sheet thêm bài. Nhóm mặc định = tiêu đề section cuối cùng đã cuộn qua mép trên list (không có section thì nhóm đầu của buổi). Prefill tên từ ô tìm khi tìm không ra kết quả. `CreateCustomExercise` chạy qua `WorkoutTransactionRunner` (Drift `database.transaction`) để lỗi add không để lại bài custom mồ côi. Trùng tên chỉ báo dưới ô + nút "Dùng bài có sẵn"; không viết lại luật trùng ở UI.
 
 ### [2026-11-15] M2 task 9: schema v2 thêm `sets.savedAt`; buổi quá 6 giờ tính từ set cuối
 

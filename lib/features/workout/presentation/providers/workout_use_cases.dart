@@ -33,6 +33,7 @@ CreateCustomExercise createCustomExercise(Ref ref) {
   return CreateCustomExercise(
     workoutRepository: ref.watch(workoutRepositoryProvider),
     exerciseRepository: ref.watch(exerciseRepositoryProvider),
+    transactionRunner: ref.watch(workoutTransactionRunnerProvider),
   );
 }
 

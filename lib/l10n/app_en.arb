@@ -82,6 +82,12 @@
   "addExercise": "Add exercise",
   "searchExercises": "Search by name",
   "createExercise": "Create exercise",
+  "exerciseNameLabel": "Exercise name",
+  "addToWorkout": "Add to workout",
+  "duplicateExerciseInGroup": "This exercise is already in the group.",
+  "useExistingExercise": "Use the existing exercise",
+  "customExerciseSaveFailed": "Could not save the exercise. Try again.",
+  "muscleGroupLabel": "Muscle group",
   "inProgressBannerTitle": "Workout in progress",
   "savedSetCount": "{count, plural, =1{1 set saved} other{{count} sets saved}}",
   "@savedSetCount": {

@@ -52,6 +52,7 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
   _Pad? _pad;
   var _scrolled = false;
   var _scrollQueued = false;
+  int? _pendingScrollId;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,10 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
     final groups =
         ref.watch(muscleGroupsProvider).asData?.value ?? const <MuscleGroup>[];
     final restVisible = ref.watch(restTimerProvider) != null;
-    if (session != null) _scheduleScroll(session);
+    if (session != null) {
+      _scheduleScroll(session);
+      _scrollToPending();
+    }
 
     final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
 
@@ -395,12 +399,31 @@ class _ActiveWorkoutScreenState extends ConsumerState<ActiveWorkoutScreen> {
     );
   }
 
-  Future<void> _openAddExercise() {
-    return showModalBottomSheet<void>(
+  Future<void> _openAddExercise() async {
+    final added = await showModalBottomSheet<int>(
       context: context,
       isScrollControlled: true,
       builder: (context) => const AddExerciseSheet(),
     );
+    if (!mounted || added == null) return;
+    setState(() => _pendingScrollId = added);
+  }
+
+  void _scrollToPending() {
+    final id = _pendingScrollId;
+    if (id == null || _scrollQueued) return;
+    _scrollQueued = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollQueued = false;
+      final target = _anchors[id]?.currentContext;
+      if (!mounted || target == null || !target.mounted) return;
+      _pendingScrollId = null;
+      Scrollable.ensureVisible(
+        target,
+        duration: const Duration(milliseconds: 200),
+        alignment: 0.1,
+      );
+    });
   }
 
   Widget _padKeys(KebapSpacing spacing) {

@@ -130,6 +130,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createExercise => 'Create exercise';
 
   @override
+  String get exerciseNameLabel => 'Exercise name';
+
+  @override
+  String get addToWorkout => 'Add to workout';
+
+  @override
+  String get duplicateExerciseInGroup =>
+      'This exercise is already in the group.';
+
+  @override
+  String get useExistingExercise => 'Use the existing exercise';
+
+  @override
+  String get customExerciseSaveFailed =>
+      'Could not save the exercise. Try again.';
+
+  @override
+  String get muscleGroupLabel => 'Muscle group';
+
+  @override
   String get inProgressBannerTitle => 'Workout in progress';
 
   @override
