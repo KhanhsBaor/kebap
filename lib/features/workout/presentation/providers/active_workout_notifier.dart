@@ -1,3 +1,4 @@
+import 'package:kebap/features/workout/domain/calculations/workout_staleness.dart';
 import 'package:kebap/features/workout/domain/entities/workout_session.dart';
 import 'package:kebap/features/workout/domain/failures/workout_rule_exception.dart';
 import 'package:kebap/features/workout/domain/usecases/create_custom_exercise.dart';
@@ -40,7 +41,7 @@ class ActiveWorkoutCommands extends _$ActiveWorkoutCommands {
           .call(
             regionId: regionId,
             muscleGroupIds: muscleGroupIds,
-            startedAt: DateTime.now(),
+            startedAt: _now(),
           );
     });
   }
@@ -97,6 +98,7 @@ class ActiveWorkoutCommands extends _$ActiveWorkoutCommands {
             workoutId: session.id,
             sessionExerciseId: sessionExerciseId,
             isWarmup: isWarmup,
+            savedAt: _now(),
             kg: kg,
             reps: reps,
           );
@@ -150,6 +152,18 @@ class ActiveWorkoutCommands extends _$ActiveWorkoutCommands {
     plannedSetsByExercise: plannedSetsByExercise,
   );
 
+  /// Saves a stale session as completed at its last saved set, not now,
+  /// and skips the planned-set question (`docs/06` mục 3.4).
+  Future<void> finishStaleWorkout() {
+    final session = _session();
+    if (session == null) return Future.value();
+    return _finish(
+      confirmSkipRemaining: true,
+      plannedSetsByExercise: const {},
+      endedAt: lastWorkoutActivity(session),
+    );
+  }
+
   Future<void> cancelWorkout() {
     return _run(() async {
       final session = _session();
@@ -163,6 +177,7 @@ class ActiveWorkoutCommands extends _$ActiveWorkoutCommands {
   Future<void> _finish({
     required bool confirmSkipRemaining,
     required Map<int, int> plannedSetsByExercise,
+    DateTime? endedAt,
   }) async {
     final session = _session();
     if (session == null) return;
@@ -171,7 +186,7 @@ class ActiveWorkoutCommands extends _$ActiveWorkoutCommands {
           .read(finishWorkoutProvider)
           .call(
             workoutId: session.id,
-            endedAt: DateTime.now(),
+            endedAt: endedAt ?? _now(),
             plannedSetsByExercise: plannedSetsByExercise,
             confirmSkipRemaining: confirmSkipRemaining,
           );
@@ -197,6 +212,8 @@ class ActiveWorkoutCommands extends _$ActiveWorkoutCommands {
       state = ActiveWorkoutRejected(error);
     }
   }
+
+  DateTime _now() => ref.read(workoutClockProvider)().toUtc();
 
   /// Latest session from the stream. Null becomes [WorkoutNotInProgress].
   WorkoutSession? _session() {

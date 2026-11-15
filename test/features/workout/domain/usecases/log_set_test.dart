@@ -10,6 +10,7 @@ import '../support/workout_fixtures.dart';
 void main() {
   late MockWorkoutRepository workouts;
   late LogSet useCase;
+  final savedAt = DateTime.utc(2026, 11, 15, 9);
 
   setUpAll(registerWorkoutFallbacks);
 
@@ -23,6 +24,7 @@ void main() {
         isWarmup: any(named: 'isWarmup'),
         kg: any(named: 'kg'),
         reps: any(named: 'reps'),
+        savedAt: any(named: 'savedAt'),
       ),
     ).thenAnswer((_) async => setLog(id: 1, position: 1, kg: null, reps: null));
   });
@@ -36,6 +38,7 @@ void main() {
       workoutId: 1,
       sessionExerciseId: 100,
       isWarmup: false,
+      savedAt: savedAt,
       kg: 60,
       reps: 10,
     );
@@ -47,6 +50,7 @@ void main() {
         isWarmup: false,
         kg: 60,
         reps: 10,
+        savedAt: savedAt,
       ),
     ).called(1);
   });
@@ -66,6 +70,7 @@ void main() {
       workoutId: 1,
       sessionExerciseId: 100,
       isWarmup: false,
+      savedAt: savedAt,
       kg: 62.5,
       reps: 8,
     );
@@ -77,13 +82,19 @@ void main() {
         isWarmup: false,
         kg: 62.5,
         reps: 8,
+        savedAt: savedAt,
       ),
     ).called(1);
   });
 
   test('throws when kg and reps are both empty and does not insert', () async {
     await expectLater(
-      useCase.call(workoutId: 1, sessionExerciseId: 100, isWarmup: true),
+      useCase.call(
+        workoutId: 1,
+        sessionExerciseId: 100,
+        isWarmup: true,
+        savedAt: savedAt,
+      ),
       throwsA(isA<InvalidSetValue>()),
     );
     verifyNever(
@@ -93,6 +104,7 @@ void main() {
         isWarmup: any(named: 'isWarmup'),
         kg: any(named: 'kg'),
         reps: any(named: 'reps'),
+        savedAt: any(named: 'savedAt'),
       ),
     );
   });
@@ -106,6 +118,7 @@ void main() {
       workoutId: 1,
       sessionExerciseId: 100,
       isWarmup: false,
+      savedAt: savedAt,
       kg: 0,
       reps: 12,
     );
@@ -117,6 +130,7 @@ void main() {
         isWarmup: false,
         kg: 0,
         reps: 12,
+        savedAt: savedAt,
       ),
     ).called(1);
   });
@@ -127,6 +141,7 @@ void main() {
         workoutId: 1,
         sessionExerciseId: 100,
         isWarmup: false,
+        savedAt: savedAt,
         kg: -2.5,
         reps: 8,
       ),
@@ -139,6 +154,7 @@ void main() {
         isWarmup: any(named: 'isWarmup'),
         kg: any(named: 'kg'),
         reps: any(named: 'reps'),
+        savedAt: any(named: 'savedAt'),
       ),
     );
   });
@@ -152,6 +168,7 @@ void main() {
           isWarmup: false,
           kg: kg,
           reps: 8,
+          savedAt: savedAt,
         ),
         throwsA(isA<InvalidSetValue>()),
       );
@@ -163,6 +180,7 @@ void main() {
         isWarmup: any(named: 'isWarmup'),
         kg: any(named: 'kg'),
         reps: any(named: 'reps'),
+        savedAt: any(named: 'savedAt'),
       ),
     );
   });
@@ -173,6 +191,7 @@ void main() {
         workoutId: 1,
         sessionExerciseId: 100,
         isWarmup: false,
+        savedAt: savedAt,
         kg: 60,
         reps: 0,
       ),
@@ -185,6 +204,7 @@ void main() {
         isWarmup: any(named: 'isWarmup'),
         kg: any(named: 'kg'),
         reps: any(named: 'reps'),
+        savedAt: any(named: 'savedAt'),
       ),
     );
   });
@@ -197,6 +217,7 @@ void main() {
         workoutId: 1,
         sessionExerciseId: 100,
         isWarmup: false,
+        savedAt: savedAt,
         kg: 60,
         reps: 8,
       ),
@@ -209,6 +230,7 @@ void main() {
         isWarmup: any(named: 'isWarmup'),
         kg: any(named: 'kg'),
         reps: any(named: 'reps'),
+        savedAt: any(named: 'savedAt'),
       ),
     );
   });
@@ -223,6 +245,7 @@ void main() {
         workoutId: 1,
         sessionExerciseId: 100,
         isWarmup: false,
+        savedAt: savedAt,
         kg: 60,
         reps: 8,
       ),
@@ -235,6 +258,7 @@ void main() {
         isWarmup: any(named: 'isWarmup'),
         kg: any(named: 'kg'),
         reps: any(named: 'reps'),
+        savedAt: any(named: 'savedAt'),
       ),
     );
   });
@@ -247,6 +271,7 @@ void main() {
         workoutId: 1,
         sessionExerciseId: 100,
         isWarmup: false,
+        savedAt: savedAt,
         kg: 60,
         reps: 8,
       ),

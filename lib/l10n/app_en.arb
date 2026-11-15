@@ -81,5 +81,33 @@
   "noExercisesInWorkout": "No exercises in this workout yet.",
   "addExercise": "Add exercise",
   "searchExercises": "Search by name",
-  "createExercise": "Create exercise"
+  "createExercise": "Create exercise",
+  "inProgressBannerTitle": "Workout in progress",
+  "savedSetCount": "{count, plural, =1{1 set saved} other{{count} sets saved}}",
+  "@savedSetCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "startedAtLabel": "Started {time}",
+  "@startedAtLabel": {
+    "placeholders": {
+      "time": {"type": "String"}
+    }
+  },
+  "discardSession": "Discard",
+  "discardConfirmTitle": "{count, plural, =1{Discard workout? 1 saved set will be deleted.} other{Discard workout? {count} saved sets will be deleted.}}",
+  "@discardConfirmTitle": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "keepTraining": "Keep training",
+  "staleWorkoutTitle": "The workout started at {time} was not finished.",
+  "@staleWorkoutTitle": {
+    "placeholders": {
+      "time": {"type": "String"}
+    }
+  },
+  "saveAsCompleted": "Save as a finished workout"
 }

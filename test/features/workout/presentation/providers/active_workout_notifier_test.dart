@@ -254,6 +254,59 @@ void main() {
   });
 
   test(
+    'finishStaleWorkout completes at the last saved set without asking',
+    () async {
+      final startedAt = DateTime.utc(2026, 11, 14, 8);
+      var now = startedAt;
+      final container = _container(database, clock: () => now);
+      addTearDown(container.dispose);
+      _listen(container);
+      final notifier = container.read(activeWorkoutCommandsProvider.notifier);
+
+      await notifier.startWorkout(
+        regionId: catalog.regionId,
+        muscleGroupIds: [catalog.chestId],
+      );
+      await _waitFor(container, (_) => true);
+      await notifier.addExercise(exerciseId: catalog.benchId);
+      final withExercise = await _waitFor(
+        container,
+        (session) => session.exercises.isNotEmpty,
+      );
+      final lastSetAt = startedAt.add(const Duration(minutes: 25));
+      for (final savedAt in [
+        startedAt.add(const Duration(minutes: 10)),
+        lastSetAt,
+      ]) {
+        now = savedAt;
+        await notifier.logSet(
+          sessionExerciseId: withExercise.exercises.single.id,
+          kg: 60,
+          reps: 8,
+        );
+      }
+      final logged = await _waitFor(
+        container,
+        (session) => session.exercises.single.sets.length == 2,
+      );
+      expect(
+        logged.exercises.single.sets.last.savedAt!.isAtSameMomentAs(lastSetAt),
+        isTrue,
+      );
+
+      now = startedAt.add(const Duration(hours: 8));
+      await notifier.finishStaleWorkout();
+
+      await _waitUntilAbsent(container);
+      expect(container.read(activeWorkoutCommandsProvider), isNull);
+      final stored = await database.select(database.workouts).getSingle();
+      expect(stored.status, WorkoutStatus.completed);
+      expect(stored.endedAt!.isAtSameMomentAs(lastSetAt), isTrue);
+      expect(stored.startedAt.isAtSameMomentAs(startedAt), isTrue);
+    },
+  );
+
+  test(
     'createCustomExercise reports the existing exercise for a duplicate name',
     () async {
       final container = _container(database);
@@ -334,14 +387,14 @@ void main() {
 
 final _restClock = DateTime.utc(2026, 11, 14, 8);
 
-ProviderContainer _container(AppDatabase database) {
+ProviderContainer _container(
+  AppDatabase database, {
+  DateTime Function()? clock,
+}) {
   return ProviderContainer(
     overrides: [
       appDatabaseProvider.overrideWith((ref) => database),
-      workoutClockProvider.overrideWith(
-        (ref) =>
-            () => _restClock,
-      ),
+      workoutClockProvider.overrideWith((ref) => clock ?? () => _restClock),
     ],
   );
 }

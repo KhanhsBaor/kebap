@@ -128,4 +128,46 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get createExercise => 'Tạo bài mới';
+
+  @override
+  String get inProgressBannerTitle => 'Buổi đang dở';
+
+  @override
+  String savedSetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count set đã lưu',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String startedAtLabel(String time) {
+    return 'Bắt đầu lúc $time';
+  }
+
+  @override
+  String get discardSession => 'Hủy buổi';
+
+  @override
+  String discardConfirmTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Hủy buổi tập? $count set đã ghi sẽ bị xóa.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get keepTraining => 'Tiếp tục tập';
+
+  @override
+  String staleWorkoutTitle(String time) {
+    return 'Buổi tập bắt đầu lúc $time chưa được kết thúc.';
+  }
+
+  @override
+  String get saveAsCompleted => 'Lưu thành buổi đã hoàn thành';
 }

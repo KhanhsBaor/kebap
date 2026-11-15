@@ -12,5 +12,8 @@ abstract class SetLog with _$SetLog {
     required bool isWarmup,
     double? kg,
     int? reps,
+
+    /// Null for sets saved before the column existed (schema v1).
+    DateTime? savedAt,
   }) = _SetLog;
 }

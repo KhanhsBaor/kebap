@@ -21,4 +21,7 @@ class WorkoutSets extends Table {
   RealColumn get kg => real().nullable()();
 
   IntColumn get reps => integer().nullable()();
+
+  /// When "Lưu set" wrote this row. Null for rows saved before schema v2.
+  DateTimeColumn get savedAt => dateTime().nullable()();
 }

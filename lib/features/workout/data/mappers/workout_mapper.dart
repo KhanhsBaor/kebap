@@ -45,6 +45,7 @@ SetLog toSetLog(db.SetRow row) {
     isWarmup: row.isWarmup,
     kg: row.kg,
     reps: row.reps,
+    savedAt: row.savedAt,
   );
 }
 
@@ -73,6 +74,7 @@ db.WorkoutSetsCompanion setInsertCompanion({
   bool isWarmup = false,
   double? kg,
   int? reps,
+  DateTime? savedAt,
 }) {
   return db.WorkoutSetsCompanion.insert(
     workoutExerciseId: sessionExerciseId,
@@ -80,6 +82,7 @@ db.WorkoutSetsCompanion setInsertCompanion({
     isWarmup: Value(isWarmup),
     kg: Value<double?>(kg),
     reps: Value<int?>(reps),
+    savedAt: Value<DateTime?>(savedAt),
   );
 }
 

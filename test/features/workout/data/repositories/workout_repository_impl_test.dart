@@ -120,12 +120,15 @@ void main() {
         workoutId: session.id,
         exerciseId: catalog.benchId,
       );
-      await repository.insertSet(
-        sessionExerciseId: added.id,
-        position: 1,
-        kg: 60,
-        reps: 5,
-      );
+      for (final position in [1, 2]) {
+        await repository.insertSet(
+          sessionExerciseId: added.id,
+          position: position,
+          kg: 60,
+          reps: 5,
+        );
+      }
+      expect(await database.select(database.workoutSets).get(), hasLength(2));
 
       await repository.deleteWorkout(session.id);
 
@@ -274,6 +277,42 @@ void main() {
     await expectLater(
       repository.deleteSet(id: logged.id, positions: const {}),
       throwsStateError,
+    );
+  });
+
+  test('insertSet stores savedAt and updateSet keeps it', () async {
+    final catalog = await _seedCatalog(database);
+    final session = await repository.insertInProgress(
+      startedAt: DateTime.utc(2026, 11, 5, 9),
+      muscleGroupIds: [catalog.chestId],
+    );
+    final added = await repository.addExercise(
+      workoutId: session.id,
+      exerciseId: catalog.benchId,
+    );
+    final savedAt = DateTime.utc(2026, 11, 5, 9, 12);
+
+    final logged = await repository.insertSet(
+      sessionExerciseId: added.id,
+      position: 1,
+      kg: 60,
+      reps: 8,
+      savedAt: savedAt,
+    );
+    expect(logged.savedAt!.isAtSameMomentAs(savedAt), isTrue);
+
+    final updated = await repository.updateSet(
+      id: logged.id,
+      isWarmup: false,
+      kg: 62.5,
+      reps: 8,
+    );
+    expect(updated.savedAt!.isAtSameMomentAs(savedAt), isTrue);
+
+    final open = await repository.watchInProgress().first;
+    expect(
+      open!.exercises.single.sets.single.savedAt!.isAtSameMomentAs(savedAt),
+      isTrue,
     );
   });
 

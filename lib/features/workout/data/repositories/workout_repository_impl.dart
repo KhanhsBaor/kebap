@@ -160,6 +160,7 @@ class WorkoutRepositoryImpl implements WorkoutRepository {
     bool isWarmup = false,
     double? kg,
     int? reps,
+    DateTime? savedAt,
   }) async {
     final row = await _database.workoutDao.insertSet(
       setInsertCompanion(
@@ -168,6 +169,7 @@ class WorkoutRepositoryImpl implements WorkoutRepository {
         isWarmup: isWarmup,
         kg: kg,
         reps: reps,
+        savedAt: savedAt,
       ),
     );
     return toSetLog(row);

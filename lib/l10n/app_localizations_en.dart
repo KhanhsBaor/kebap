@@ -128,4 +128,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get createExercise => 'Create exercise';
+
+  @override
+  String get inProgressBannerTitle => 'Workout in progress';
+
+  @override
+  String savedSetCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sets saved',
+      one: '1 set saved',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String startedAtLabel(String time) {
+    return 'Started $time';
+  }
+
+  @override
+  String get discardSession => 'Discard';
+
+  @override
+  String discardConfirmTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Discard workout? $count saved sets will be deleted.',
+      one: 'Discard workout? 1 saved set will be deleted.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get keepTraining => 'Keep training';
+
+  @override
+  String staleWorkoutTitle(String time) {
+    return 'The workout started at $time was not finished.';
+  }
+
+  @override
+  String get saveAsCompleted => 'Save as a finished workout';
 }

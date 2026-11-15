@@ -2141,6 +2141,17 @@ class $WorkoutSetsTable extends WorkoutSets
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _savedAtMeta = const VerificationMeta(
+    'savedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> savedAt = GeneratedColumn<DateTime>(
+    'saved_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -2149,6 +2160,7 @@ class $WorkoutSetsTable extends WorkoutSets
     isWarmup,
     kg,
     reps,
+    savedAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2199,6 +2211,12 @@ class $WorkoutSetsTable extends WorkoutSets
         reps.isAcceptableOrUnknown(data['reps']!, _repsMeta),
       );
     }
+    if (data.containsKey('saved_at')) {
+      context.handle(
+        _savedAtMeta,
+        savedAt.isAcceptableOrUnknown(data['saved_at']!, _savedAtMeta),
+      );
+    }
     return context;
   }
 
@@ -2232,6 +2250,10 @@ class $WorkoutSetsTable extends WorkoutSets
         DriftSqlType.int,
         data['${effectivePrefix}reps'],
       ),
+      savedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}saved_at'],
+      ),
     );
   }
 
@@ -2248,6 +2270,9 @@ class SetRow extends DataClass implements Insertable<SetRow> {
   final bool isWarmup;
   final double? kg;
   final int? reps;
+
+  /// When "Lưu set" wrote this row. Null for rows saved before schema v2.
+  final DateTime? savedAt;
   const SetRow({
     required this.id,
     required this.workoutExerciseId,
@@ -2255,6 +2280,7 @@ class SetRow extends DataClass implements Insertable<SetRow> {
     required this.isWarmup,
     this.kg,
     this.reps,
+    this.savedAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2269,6 +2295,9 @@ class SetRow extends DataClass implements Insertable<SetRow> {
     if (!nullToAbsent || reps != null) {
       map['reps'] = Variable<int>(reps);
     }
+    if (!nullToAbsent || savedAt != null) {
+      map['saved_at'] = Variable<DateTime>(savedAt);
+    }
     return map;
   }
 
@@ -2280,6 +2309,9 @@ class SetRow extends DataClass implements Insertable<SetRow> {
       isWarmup: Value(isWarmup),
       kg: kg == null && nullToAbsent ? const Value.absent() : Value(kg),
       reps: reps == null && nullToAbsent ? const Value.absent() : Value(reps),
+      savedAt: savedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(savedAt),
     );
   }
 
@@ -2295,6 +2327,7 @@ class SetRow extends DataClass implements Insertable<SetRow> {
       isWarmup: serializer.fromJson<bool>(json['isWarmup']),
       kg: serializer.fromJson<double?>(json['kg']),
       reps: serializer.fromJson<int?>(json['reps']),
+      savedAt: serializer.fromJson<DateTime?>(json['savedAt']),
     );
   }
   @override
@@ -2307,6 +2340,7 @@ class SetRow extends DataClass implements Insertable<SetRow> {
       'isWarmup': serializer.toJson<bool>(isWarmup),
       'kg': serializer.toJson<double?>(kg),
       'reps': serializer.toJson<int?>(reps),
+      'savedAt': serializer.toJson<DateTime?>(savedAt),
     };
   }
 
@@ -2317,6 +2351,7 @@ class SetRow extends DataClass implements Insertable<SetRow> {
     bool? isWarmup,
     Value<double?> kg = const Value.absent(),
     Value<int?> reps = const Value.absent(),
+    Value<DateTime?> savedAt = const Value.absent(),
   }) => SetRow(
     id: id ?? this.id,
     workoutExerciseId: workoutExerciseId ?? this.workoutExerciseId,
@@ -2324,6 +2359,7 @@ class SetRow extends DataClass implements Insertable<SetRow> {
     isWarmup: isWarmup ?? this.isWarmup,
     kg: kg.present ? kg.value : this.kg,
     reps: reps.present ? reps.value : this.reps,
+    savedAt: savedAt.present ? savedAt.value : this.savedAt,
   );
   SetRow copyWithCompanion(WorkoutSetsCompanion data) {
     return SetRow(
@@ -2335,6 +2371,7 @@ class SetRow extends DataClass implements Insertable<SetRow> {
       isWarmup: data.isWarmup.present ? data.isWarmup.value : this.isWarmup,
       kg: data.kg.present ? data.kg.value : this.kg,
       reps: data.reps.present ? data.reps.value : this.reps,
+      savedAt: data.savedAt.present ? data.savedAt.value : this.savedAt,
     );
   }
 
@@ -2346,14 +2383,15 @@ class SetRow extends DataClass implements Insertable<SetRow> {
           ..write('position: $position, ')
           ..write('isWarmup: $isWarmup, ')
           ..write('kg: $kg, ')
-          ..write('reps: $reps')
+          ..write('reps: $reps, ')
+          ..write('savedAt: $savedAt')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode =>
-      Object.hash(id, workoutExerciseId, position, isWarmup, kg, reps);
+      Object.hash(id, workoutExerciseId, position, isWarmup, kg, reps, savedAt);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2363,7 +2401,8 @@ class SetRow extends DataClass implements Insertable<SetRow> {
           other.position == this.position &&
           other.isWarmup == this.isWarmup &&
           other.kg == this.kg &&
-          other.reps == this.reps);
+          other.reps == this.reps &&
+          other.savedAt == this.savedAt);
 }
 
 class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
@@ -2373,6 +2412,7 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
   final Value<bool> isWarmup;
   final Value<double?> kg;
   final Value<int?> reps;
+  final Value<DateTime?> savedAt;
   const WorkoutSetsCompanion({
     this.id = const Value.absent(),
     this.workoutExerciseId = const Value.absent(),
@@ -2380,6 +2420,7 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
     this.isWarmup = const Value.absent(),
     this.kg = const Value.absent(),
     this.reps = const Value.absent(),
+    this.savedAt = const Value.absent(),
   });
   WorkoutSetsCompanion.insert({
     this.id = const Value.absent(),
@@ -2388,6 +2429,7 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
     this.isWarmup = const Value.absent(),
     this.kg = const Value.absent(),
     this.reps = const Value.absent(),
+    this.savedAt = const Value.absent(),
   }) : workoutExerciseId = Value(workoutExerciseId),
        position = Value(position);
   static Insertable<SetRow> custom({
@@ -2397,6 +2439,7 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
     Expression<bool>? isWarmup,
     Expression<double>? kg,
     Expression<int>? reps,
+    Expression<DateTime>? savedAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2405,6 +2448,7 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
       if (isWarmup != null) 'is_warmup': isWarmup,
       if (kg != null) 'kg': kg,
       if (reps != null) 'reps': reps,
+      if (savedAt != null) 'saved_at': savedAt,
     });
   }
 
@@ -2415,6 +2459,7 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
     Value<bool>? isWarmup,
     Value<double?>? kg,
     Value<int?>? reps,
+    Value<DateTime?>? savedAt,
   }) {
     return WorkoutSetsCompanion(
       id: id ?? this.id,
@@ -2423,6 +2468,7 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
       isWarmup: isWarmup ?? this.isWarmup,
       kg: kg ?? this.kg,
       reps: reps ?? this.reps,
+      savedAt: savedAt ?? this.savedAt,
     );
   }
 
@@ -2447,6 +2493,9 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
     if (reps.present) {
       map['reps'] = Variable<int>(reps.value);
     }
+    if (savedAt.present) {
+      map['saved_at'] = Variable<DateTime>(savedAt.value);
+    }
     return map;
   }
 
@@ -2458,7 +2507,8 @@ class WorkoutSetsCompanion extends UpdateCompanion<SetRow> {
           ..write('position: $position, ')
           ..write('isWarmup: $isWarmup, ')
           ..write('kg: $kg, ')
-          ..write('reps: $reps')
+          ..write('reps: $reps, ')
+          ..write('savedAt: $savedAt')
           ..write(')'))
         .toString();
   }
@@ -5059,6 +5109,7 @@ typedef $$WorkoutSetsTableCreateCompanionBuilder =
       Value<bool> isWarmup,
       Value<double?> kg,
       Value<int?> reps,
+      Value<DateTime?> savedAt,
     });
 typedef $$WorkoutSetsTableUpdateCompanionBuilder =
     WorkoutSetsCompanion Function({
@@ -5068,6 +5119,7 @@ typedef $$WorkoutSetsTableUpdateCompanionBuilder =
       Value<bool> isWarmup,
       Value<double?> kg,
       Value<int?> reps,
+      Value<DateTime?> savedAt,
     });
 
 final class $$WorkoutSetsTableReferences
@@ -5124,6 +5176,11 @@ class $$WorkoutSetsTableFilterComposer
 
   ColumnFilters<int> get reps => $composableBuilder(
     column: $table.reps,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get savedAt => $composableBuilder(
+    column: $table.savedAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5185,6 +5242,11 @@ class $$WorkoutSetsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<DateTime> get savedAt => $composableBuilder(
+    column: $table.savedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$WorkoutExercisesTableOrderingComposer get workoutExerciseId {
     final $$WorkoutExercisesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -5232,6 +5294,9 @@ class $$WorkoutSetsTableAnnotationComposer
 
   GeneratedColumn<int> get reps =>
       $composableBuilder(column: $table.reps, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get savedAt =>
+      $composableBuilder(column: $table.savedAt, builder: (column) => column);
 
   $$WorkoutExercisesTableAnnotationComposer get workoutExerciseId {
     final $$WorkoutExercisesTableAnnotationComposer composer = $composerBuilder(
@@ -5291,6 +5356,7 @@ class $$WorkoutSetsTableTableManager
                 Value<bool> isWarmup = const Value.absent(),
                 Value<double?> kg = const Value.absent(),
                 Value<int?> reps = const Value.absent(),
+                Value<DateTime?> savedAt = const Value.absent(),
               }) => WorkoutSetsCompanion(
                 id: id,
                 workoutExerciseId: workoutExerciseId,
@@ -5298,6 +5364,7 @@ class $$WorkoutSetsTableTableManager
                 isWarmup: isWarmup,
                 kg: kg,
                 reps: reps,
+                savedAt: savedAt,
               ),
           createCompanionCallback:
               ({
@@ -5307,6 +5374,7 @@ class $$WorkoutSetsTableTableManager
                 Value<bool> isWarmup = const Value.absent(),
                 Value<double?> kg = const Value.absent(),
                 Value<int?> reps = const Value.absent(),
+                Value<DateTime?> savedAt = const Value.absent(),
               }) => WorkoutSetsCompanion.insert(
                 id: id,
                 workoutExerciseId: workoutExerciseId,
@@ -5314,6 +5382,7 @@ class $$WorkoutSetsTableTableManager
                 isWarmup: isWarmup,
                 kg: kg,
                 reps: reps,
+                savedAt: savedAt,
               ),
           withReferenceMapper: (p0) => p0
               .map(

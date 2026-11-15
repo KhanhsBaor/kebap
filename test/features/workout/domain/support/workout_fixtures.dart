@@ -60,6 +60,7 @@ SetLog setLog({
   bool isWarmup = false,
   double? kg = 60,
   int? reps = 10,
+  DateTime? savedAt,
 }) {
   return SetLog(
     id: id,
@@ -68,6 +69,7 @@ SetLog setLog({
     isWarmup: isWarmup,
     kg: kg,
     reps: reps,
+    savedAt: savedAt,
   );
 }
 

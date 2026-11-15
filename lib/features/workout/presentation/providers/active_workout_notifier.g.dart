@@ -66,7 +66,7 @@ final class ActiveWorkoutCommandsProvider
 }
 
 String _$activeWorkoutCommandsHash() =>
-    r'602ce182c88eafd6c0336f3199197f4c65c7681f';
+    r'b59c6199c060e402c0d5d78f7bd763afd710d99d';
 
 /// Session commands. Each method calls one use case and stores a notice
 /// when the screen has to ask or explain.

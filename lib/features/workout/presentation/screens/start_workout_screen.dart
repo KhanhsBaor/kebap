@@ -12,6 +12,7 @@ import 'package:kebap/features/catalog/presentation/providers/catalog_providers.
 import 'package:kebap/features/workout/domain/entities/workout_session.dart';
 import 'package:kebap/features/workout/presentation/providers/active_workout.dart';
 import 'package:kebap/features/workout/presentation/providers/active_workout_notifier.dart';
+import 'package:kebap/features/workout/presentation/widgets/workout_dialogs.dart';
 import 'package:kebap/l10n/app_localizations.dart';
 
 const _regionSlugs = ['upper_body', 'lower_body', 'other'];
@@ -127,63 +128,17 @@ class _StartWorkoutScreenState extends ConsumerState<StartWorkoutScreen> {
     context.pushReplacementNamed(AppRoutes.activeWorkoutName);
   }
 
-  Future<void> _showInProgressDialog() {
-    final l10n = AppLocalizations.of(context);
-    final colors = Theme.of(context).extension<KebapColors>()!;
-    final spacing = Theme.of(context).extension<KebapSpacing>()!;
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (dialogContext) {
-        return AlertDialog(
-          backgroundColor: colors.surface,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(spacing.radiusCard),
-            side: BorderSide(color: colors.border),
-          ),
-          title: Text(l10n.workoutInProgressTitle),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              FilledButton(
-                key: const ValueKey('continue-that-workout'),
-                onPressed: () {
-                  Navigator.of(dialogContext).pop();
-                  context.pushReplacementNamed(AppRoutes.activeWorkoutName);
-                },
-                style: FilledButton.styleFrom(
-                  minimumSize: Size.fromHeight(spacing.touch),
-                  backgroundColor: colors.primary,
-                  foregroundColor: colors.onPrimary,
-                ),
-                child: Text(l10n.continueThatWorkout),
-              ),
-              SizedBox(height: spacing.sm),
-              OutlinedButton(
-                key: const ValueKey('discard-and-start-new'),
-                onPressed: () async {
-                  Navigator.of(dialogContext).pop();
-                  await ref
-                      .read(activeWorkoutCommandsProvider.notifier)
-                      .cancelWorkout();
-                },
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: colors.trendDown,
-                  minimumSize: Size.fromHeight(spacing.touch),
-                  side: BorderSide(color: colors.trendDown),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(spacing.radiusCard),
-                  ),
-                ),
-                child: Text(l10n.discardAndStartNew),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  Future<void> _showInProgressDialog() async {
+    final choice = await showInProgressWorkoutDialog(context);
+    if (!mounted) return;
+    switch (choice) {
+      case InProgressChoice.continueIt:
+        context.pushReplacementNamed(AppRoutes.activeWorkoutName);
+      case InProgressChoice.discardAndStartNew:
+        await ref.read(activeWorkoutCommandsProvider.notifier).cancelWorkout();
+      case null:
+        break;
+    }
   }
 }
 

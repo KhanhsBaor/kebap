@@ -13,6 +13,7 @@ class LogSet {
     required int workoutId,
     required int sessionExerciseId,
     required bool isWarmup,
+    required DateTime savedAt,
     double? kg,
     int? reps,
   }) async {
@@ -31,6 +32,7 @@ class LogSet {
       isWarmup: isWarmup,
       kg: kg,
       reps: reps,
+      savedAt: savedAt,
     );
   }
 }

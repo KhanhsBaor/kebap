@@ -331,6 +331,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Create exercise'**
   String get createExercise;
+
+  /// No description provided for @inProgressBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout in progress'**
+  String get inProgressBannerTitle;
+
+  /// No description provided for @savedSetCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 set saved} other{{count} sets saved}}'**
+  String savedSetCount(int count);
+
+  /// No description provided for @startedAtLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Started {time}'**
+  String startedAtLabel(String time);
+
+  /// No description provided for @discardSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get discardSession;
+
+  /// No description provided for @discardConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Discard workout? 1 saved set will be deleted.} other{Discard workout? {count} saved sets will be deleted.}}'**
+  String discardConfirmTitle(int count);
+
+  /// No description provided for @keepTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep training'**
+  String get keepTraining;
+
+  /// No description provided for @staleWorkoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The workout started at {time} was not finished.'**
+  String staleWorkoutTitle(String time);
+
+  /// No description provided for @saveAsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as a finished workout'**
+  String get saveAsCompleted;
 }
 
 class _AppLocalizationsDelegate

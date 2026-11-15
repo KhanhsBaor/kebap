@@ -43,7 +43,7 @@ Hoàn thành **luồng đang tập** tối thiểu — trái tim nhật ký.
 
 ## Checklist task (1 chat / task)
 
-- [x] Schema Drift: `muscle_groups` (+ region), `exercises` (`muscleGroupId`, `isCustom`, `sourceId` nullable, `equipment` enum bắt buộc với bài seed, để trống với custom — `docs/04`), `workouts`, `workout_muscle_groups` (bảng nối, buổi ↔ nhiều nhóm), `workout_exercises`, `sets`. Schema v1 đã đủ — không cần migration.
+- [x] Schema Drift: `muscle_groups` (+ region), `exercises` (`muscleGroupId`, `isCustom`, `sourceId` nullable, `equipment` enum bắt buộc với bài seed, để trống với custom — `docs/04`), `workouts`, `workout_muscle_groups` (bảng nối, buổi ↔ nhiều nhóm), `workout_exercises`, `sets`. Schema v2 (task 9) thêm `sets.savedAt` cho quy tắc buổi quá 6 giờ; có migration v1→v2 và test.
 - [x] Domain entities (freezed) + repository contracts — region / muscle group / exercise / workout / set
 - [x] Seed region + đủ muscle groups theo `01`; import các dòng trong `seed/exercises.csv` đã có `kebapMuscleGroup`, `kebapEquipment` và `nameVi` (bài seed: `equipment` không null, tên EN + VI)
 - [x] Data: repository impl + mapper Drift ↔ entity
@@ -51,7 +51,7 @@ Hoàn thành **luồng đang tập** tối thiểu — trái tim nhật ký.
 - [x] Providers/notifiers Riverpod cho phiên đang tập (không nhét business nặng vào notifier)
 - [x] UI: start — chọn **Upper body / Lower body / Other** → chọn một hoặc nhiều muscle group
 - [x] UI: đang tập theo `docs/05` — bài của các nhóm đã chọn, "Lưu set", prefill, cột "Lần trước", warmup, đồng hồ nghỉ ±15 giây
-- [ ] UI: Home — banner "Buổi đang dở" (Tiếp tục / Hủy buổi) khi có `in_progress`; không tự mở màn tập
+- [x] UI: Home — banner "Buổi đang dở" (Tiếp tục / Hủy buổi) khi có `in_progress`; không tự mở màn tập
 - [ ] UI: tạo custom exercise — mặc định nhóm đang xem, chip đổi sang nhóm khác của buổi; thêm ngay vào buổi. Tên trùng y hệt (không phân biệt hoa thường) trong cùng nhóm thì chặn và gợi ý bài có sẵn. Không cho thêm bài ngoài các nhóm của buổi.
 - [ ] UI: hủy và kết thúc theo `docs/06` mục 4–5 (0 set không cho kết thúc; còn set dự kiến thì hỏi)
 - [ ] Widget test: đếm `tester.tap` theo ngân sách `docs/05` mục 2; vùng chạm tối thiểu 48 dp

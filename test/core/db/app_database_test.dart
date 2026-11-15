@@ -15,8 +15,8 @@ void main() {
     await database.close();
   });
 
-  test('opens schema v1 and stores a workout chain', () async {
-    expect(database.schemaVersion, 1);
+  test('opens schema v2 and stores a workout chain', () async {
+    expect(database.schemaVersion, 2);
 
     final regionId = await database
         .into(database.regions)

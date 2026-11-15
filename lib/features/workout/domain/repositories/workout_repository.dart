@@ -62,6 +62,7 @@ abstract class WorkoutRepository {
     bool isWarmup = false,
     double? kg,
     int? reps,
+    DateTime? savedAt,
   });
 
   Future<SetLog> updateSet({

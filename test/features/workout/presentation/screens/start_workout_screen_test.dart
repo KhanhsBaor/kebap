@@ -16,6 +16,7 @@ import 'package:kebap/features/workout/presentation/notices/active_workout_notic
 import 'package:kebap/features/workout/presentation/providers/active_workout.dart';
 import 'package:kebap/features/workout/presentation/providers/active_workout_exercises.dart';
 import 'package:kebap/features/workout/presentation/providers/active_workout_notifier.dart';
+import 'package:kebap/features/workout/presentation/providers/rest_timer_notifier.dart';
 import 'package:kebap/features/workout/presentation/screens/active_workout_screen.dart';
 import 'package:kebap/features/workout/presentation/screens/start_workout_screen.dart';
 import 'package:kebap/l10n/app_localizations.dart';
@@ -324,6 +325,10 @@ Widget _scope({
         (ref) => Stream.value(const <Exercise>[]),
       ),
       activeWorkoutCommandsProvider.overrideWith(_RecordingCommands.new),
+      workoutClockProvider.overrideWith(
+        (ref) =>
+            () => DateTime.utc(2026, 11, 14, 1),
+      ),
     ],
     child: MaterialApp.router(
       routerConfig: router,

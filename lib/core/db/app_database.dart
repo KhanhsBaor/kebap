@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:flutter/services.dart';
+import 'package:kebap/core/db/app_database.steps.dart';
 import 'package:kebap/core/db/converters/workout_status_converter.dart';
 import 'package:kebap/core/db/daos/catalog_dao.dart';
 import 'package:kebap/core/db/daos/workout_dao.dart';
@@ -38,13 +39,18 @@ class AppDatabase extends _$AppDatabase {
   final Future<String> Function() _loadSeedCsv;
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
     onCreate: (migrator) async {
       await migrator.createAll();
     },
+    onUpgrade: stepByStep(
+      from1To2: (migrator, schema) async {
+        await migrator.addColumn(schema.sets, schema.sets.savedAt);
+      },
+    ),
     beforeOpen: (details) async {
       await customStatement('PRAGMA foreign_keys = ON');
       if (!seedOnOpen) return;
