@@ -5,6 +5,8 @@ import 'package:kebap/core/router/app_shell.dart';
 import 'package:kebap/features/history/presentation/screens/history_screen.dart';
 import 'package:kebap/features/progress/presentation/screens/progress_screen.dart';
 import 'package:kebap/features/today/presentation/screens/today_screen.dart';
+import 'package:kebap/features/workout/presentation/screens/active_workout_screen.dart';
+import 'package:kebap/features/workout/presentation/screens/start_workout_screen.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_router.g.dart';
@@ -49,6 +51,18 @@ GoRouter router(Ref ref) {
             ],
           ),
         ],
+      ),
+      GoRoute(
+        path: AppRoutes.startWorkout,
+        name: AppRoutes.startWorkoutName,
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const StartWorkoutScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.activeWorkout,
+        name: AppRoutes.activeWorkoutName,
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const ActiveWorkoutScreen(),
       ),
     ],
   );

@@ -212,8 +212,8 @@ return $default(_that.id,_that.status,_that.startedAt,_that.endedAt,_that.splitD
 /// @nodoc
 
 
-class _WorkoutSession implements WorkoutSession {
-  const _WorkoutSession({required this.id, required this.status, required this.startedAt, this.endedAt, this.splitDayId, required  List<int> muscleGroupIds,  List<SessionExercise> exercises = const <SessionExercise>[]}): _muscleGroupIds = muscleGroupIds,_exercises = exercises;
+class _WorkoutSession extends WorkoutSession {
+  const _WorkoutSession({required this.id, required this.status, required this.startedAt, this.endedAt, this.splitDayId, required  List<int> muscleGroupIds,  List<SessionExercise> exercises = const <SessionExercise>[]}): _muscleGroupIds = muscleGroupIds,_exercises = exercises,super._();
   
 
 @override final  int id;

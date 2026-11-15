@@ -15,4 +15,10 @@ abstract class WorkoutSession with _$WorkoutSession {
     required List<int> muscleGroupIds,
     @Default(<SessionExercise>[]) List<SessionExercise> exercises,
   }) = _WorkoutSession;
+
+  const WorkoutSession._();
+
+  /// Every saved set, warm-up included.
+  int get savedSetCount =>
+      exercises.fold(0, (sum, exercise) => sum + exercise.sets.length);
 }

@@ -15,7 +15,8 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SetLog {
 
- int get id; int get sessionExerciseId; int get position; bool get isWarmup; double? get kg; int? get reps;
+ int get id; int get sessionExerciseId; int get position; bool get isWarmup; double? get kg; int? get reps;/// Null for sets saved before the column existed (schema v1).
+ DateTime? get savedAt;
 /// Create a copy of SetLog
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +27,16 @@ $SetLogCopyWith<SetLog> get copyWith => _$SetLogCopyWithImpl<SetLog>(this as Set
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SetLog&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionExerciseId, sessionExerciseId) || other.sessionExerciseId == sessionExerciseId)&&(identical(other.position, position) || other.position == position)&&(identical(other.isWarmup, isWarmup) || other.isWarmup == isWarmup)&&(identical(other.kg, kg) || other.kg == kg)&&(identical(other.reps, reps) || other.reps == reps));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SetLog&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionExerciseId, sessionExerciseId) || other.sessionExerciseId == sessionExerciseId)&&(identical(other.position, position) || other.position == position)&&(identical(other.isWarmup, isWarmup) || other.isWarmup == isWarmup)&&(identical(other.kg, kg) || other.kg == kg)&&(identical(other.reps, reps) || other.reps == reps)&&(identical(other.savedAt, savedAt) || other.savedAt == savedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,sessionExerciseId,position,isWarmup,kg,reps);
+int get hashCode => Object.hash(runtimeType,id,sessionExerciseId,position,isWarmup,kg,reps,savedAt);
 
 @override
 String toString() {
-  return 'SetLog(id: $id, sessionExerciseId: $sessionExerciseId, position: $position, isWarmup: $isWarmup, kg: $kg, reps: $reps)';
+  return 'SetLog(id: $id, sessionExerciseId: $sessionExerciseId, position: $position, isWarmup: $isWarmup, kg: $kg, reps: $reps, savedAt: $savedAt)';
 }
 
 
@@ -46,7 +47,7 @@ abstract mixin class $SetLogCopyWith<$Res>  {
   factory $SetLogCopyWith(SetLog value, $Res Function(SetLog) _then) = _$SetLogCopyWithImpl;
 @useResult
 $Res call({
- int id, int sessionExerciseId, int position, bool isWarmup, double? kg, int? reps
+ int id, int sessionExerciseId, int position, bool isWarmup, double? kg, int? reps, DateTime? savedAt
 });
 
 
@@ -63,7 +64,7 @@ class _$SetLogCopyWithImpl<$Res>
 
 /// Create a copy of SetLog
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? sessionExerciseId = null,Object? position = null,Object? isWarmup = null,Object? kg = freezed,Object? reps = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? sessionExerciseId = null,Object? position = null,Object? isWarmup = null,Object? kg = freezed,Object? reps = freezed,Object? savedAt = freezed,}) {
   return _then(SetLog(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,sessionExerciseId: null == sessionExerciseId ? _self.sessionExerciseId : sessionExerciseId // ignore: cast_nullable_to_non_nullable
@@ -71,7 +72,8 @@ as int,position: null == position ? _self.position : position // ignore: cast_nu
 as int,isWarmup: null == isWarmup ? _self.isWarmup : isWarmup // ignore: cast_nullable_to_non_nullable
 as bool,kg: freezed == kg ? _self.kg : kg // ignore: cast_nullable_to_non_nullable
 as double?,reps: freezed == reps ? _self.reps : reps // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,savedAt: freezed == savedAt ? _self.savedAt : savedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 
@@ -156,10 +158,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int sessionExerciseId,  int position,  bool isWarmup,  double? kg,  int? reps)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int sessionExerciseId,  int position,  bool isWarmup,  double? kg,  int? reps,  DateTime? savedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SetLog() when $default != null:
-return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_that.kg,_that.reps);case _:
+return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_that.kg,_that.reps,_that.savedAt);case _:
   return orElse();
 
 }
@@ -177,10 +179,10 @@ return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int sessionExerciseId,  int position,  bool isWarmup,  double? kg,  int? reps)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int sessionExerciseId,  int position,  bool isWarmup,  double? kg,  int? reps,  DateTime? savedAt)  $default,) {final _that = this;
 switch (_that) {
 case _SetLog():
-return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_that.kg,_that.reps);case _:
+return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_that.kg,_that.reps,_that.savedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +199,10 @@ return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int sessionExerciseId,  int position,  bool isWarmup,  double? kg,  int? reps)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int sessionExerciseId,  int position,  bool isWarmup,  double? kg,  int? reps,  DateTime? savedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _SetLog() when $default != null:
-return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_that.kg,_that.reps);case _:
+return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_that.kg,_that.reps,_that.savedAt);case _:
   return null;
 
 }
@@ -212,7 +214,7 @@ return $default(_that.id,_that.sessionExerciseId,_that.position,_that.isWarmup,_
 
 
 class _SetLog implements SetLog {
-  const _SetLog({required this.id, required this.sessionExerciseId, required this.position, required this.isWarmup, this.kg, this.reps});
+  const _SetLog({required this.id, required this.sessionExerciseId, required this.position, required this.isWarmup, this.kg, this.reps, this.savedAt});
   
 
 @override final  int id;
@@ -221,6 +223,8 @@ class _SetLog implements SetLog {
 @override final  bool isWarmup;
 @override final  double? kg;
 @override final  int? reps;
+/// Null for sets saved before the column existed (schema v1).
+@override final  DateTime? savedAt;
 
 /// Create a copy of SetLog
 /// with the given fields replaced by the non-null parameter values.
@@ -232,16 +236,16 @@ _$SetLogCopyWith<_SetLog> get copyWith => __$SetLogCopyWithImpl<_SetLog>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetLog&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionExerciseId, sessionExerciseId) || other.sessionExerciseId == sessionExerciseId)&&(identical(other.position, position) || other.position == position)&&(identical(other.isWarmup, isWarmup) || other.isWarmup == isWarmup)&&(identical(other.kg, kg) || other.kg == kg)&&(identical(other.reps, reps) || other.reps == reps));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SetLog&&(identical(other.id, id) || other.id == id)&&(identical(other.sessionExerciseId, sessionExerciseId) || other.sessionExerciseId == sessionExerciseId)&&(identical(other.position, position) || other.position == position)&&(identical(other.isWarmup, isWarmup) || other.isWarmup == isWarmup)&&(identical(other.kg, kg) || other.kg == kg)&&(identical(other.reps, reps) || other.reps == reps)&&(identical(other.savedAt, savedAt) || other.savedAt == savedAt));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,sessionExerciseId,position,isWarmup,kg,reps);
+int get hashCode => Object.hash(runtimeType,id,sessionExerciseId,position,isWarmup,kg,reps,savedAt);
 
 @override
 String toString() {
-  return 'SetLog(id: $id, sessionExerciseId: $sessionExerciseId, position: $position, isWarmup: $isWarmup, kg: $kg, reps: $reps)';
+  return 'SetLog(id: $id, sessionExerciseId: $sessionExerciseId, position: $position, isWarmup: $isWarmup, kg: $kg, reps: $reps, savedAt: $savedAt)';
 }
 
 
@@ -252,7 +256,7 @@ abstract mixin class _$SetLogCopyWith<$Res> implements $SetLogCopyWith<$Res> {
   factory _$SetLogCopyWith(_SetLog value, $Res Function(_SetLog) _then) = __$SetLogCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int sessionExerciseId, int position, bool isWarmup, double? kg, int? reps
+ int id, int sessionExerciseId, int position, bool isWarmup, double? kg, int? reps, DateTime? savedAt
 });
 
 
@@ -269,7 +273,7 @@ class __$SetLogCopyWithImpl<$Res>
 
 /// Create a copy of SetLog
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? sessionExerciseId = null,Object? position = null,Object? isWarmup = null,Object? kg = freezed,Object? reps = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? sessionExerciseId = null,Object? position = null,Object? isWarmup = null,Object? kg = freezed,Object? reps = freezed,Object? savedAt = freezed,}) {
   return _then(_SetLog(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,sessionExerciseId: null == sessionExerciseId ? _self.sessionExerciseId : sessionExerciseId // ignore: cast_nullable_to_non_nullable
@@ -277,7 +281,8 @@ as int,position: null == position ? _self.position : position // ignore: cast_nu
 as int,isWarmup: null == isWarmup ? _self.isWarmup : isWarmup // ignore: cast_nullable_to_non_nullable
 as bool,kg: freezed == kg ? _self.kg : kg // ignore: cast_nullable_to_non_nullable
 as double?,reps: freezed == reps ? _self.reps : reps // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,savedAt: freezed == savedAt ? _self.savedAt : savedAt // ignore: cast_nullable_to_non_nullable
+as DateTime?,
   ));
 }
 

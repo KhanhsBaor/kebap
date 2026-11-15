@@ -14,7 +14,10 @@ import 'package:kebap/features/today/presentation/screens/today_screen.dart';
 void main() {
   testWidgets('switches tabs in light and dark themes', (tester) async {
     for (final themeMode in [ThemeMode.light, ThemeMode.dark]) {
-      final database = AppDatabase(NativeDatabase.memory());
+      final database = AppDatabase(
+        NativeDatabase.memory(),
+        seedOnOpen: false,
+      );
       try {
         await tester.pumpWidget(
           ProviderScope(
@@ -65,7 +68,7 @@ void main() {
   });
 
   testWidgets('shows Vietnamese tab copy', (tester) async {
-    final database = AppDatabase(NativeDatabase.memory());
+    final database = AppDatabase(NativeDatabase.memory(), seedOnOpen: false);
     addTearDown(database.close);
 
     await tester.pumpWidget(
@@ -80,5 +83,8 @@ void main() {
     expect(find.text('Hôm nay'), findsWidgets);
     expect(find.text('Tiến trình'), findsOneWidget);
     expect(find.text('Lịch sử'), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pumpAndSettle();
   });
 }

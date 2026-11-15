@@ -133,6 +133,288 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Completed workouts will show up here.'**
   String get historyEmpty;
+
+  /// Title of the screen where a workout's muscle groups are chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Start a workout'**
+  String get startWorkoutTitle;
+
+  /// Primary button that creates an in-progress workout
+  ///
+  /// In en, this message translates to:
+  /// **'Start workout'**
+  String get startWorkoutAction;
+
+  /// Empty catalog on the start-workout screen
+  ///
+  /// In en, this message translates to:
+  /// **'No muscle groups yet.'**
+  String get noMuscleGroups;
+
+  /// Dialog shown when opening start while a session is already open
+  ///
+  /// In en, this message translates to:
+  /// **'You have a workout in progress'**
+  String get workoutInProgressTitle;
+
+  /// Primary action on Today when a workout is already in progress
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get continueWorkout;
+
+  /// No description provided for @continueThatWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue that workout'**
+  String get continueThatWorkout;
+
+  /// No description provided for @discardAndStartNew.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard and start a new one'**
+  String get discardAndStartNew;
+
+  /// Title of the in-progress workout screen
+  ///
+  /// In en, this message translates to:
+  /// **'Workout'**
+  String get activeWorkoutTitle;
+
+  /// No description provided for @startWorkoutFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not start the workout.'**
+  String get startWorkoutFailed;
+
+  /// No description provided for @discardWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard workout'**
+  String get discardWorkout;
+
+  /// No description provided for @finishWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish'**
+  String get finishWorkout;
+
+  /// No description provided for @setColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get setColumn;
+
+  /// No description provided for @previousColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previousColumn;
+
+  /// No description provided for @kgColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'kg'**
+  String get kgColumn;
+
+  /// No description provided for @repsColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Reps'**
+  String get repsColumn;
+
+  /// No description provided for @saveSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Save set'**
+  String get saveSet;
+
+  /// SnackBar when logSet is rejected
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the set.'**
+  String get saveSetFailed;
+
+  /// Semantics for the check that deletes a saved set
+  ///
+  /// In en, this message translates to:
+  /// **'Undo saved set'**
+  String get undoSet;
+
+  /// No description provided for @decreaseKg.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease weight'**
+  String get decreaseKg;
+
+  /// No description provided for @increaseKg.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase weight'**
+  String get increaseKg;
+
+  /// No description provided for @decreaseReps.
+  ///
+  /// In en, this message translates to:
+  /// **'Decrease reps'**
+  String get decreaseReps;
+
+  /// No description provided for @increaseReps.
+  ///
+  /// In en, this message translates to:
+  /// **'Increase reps'**
+  String get increaseReps;
+
+  /// No description provided for @noPreviousSession.
+  ///
+  /// In en, this message translates to:
+  /// **'No previous session'**
+  String get noPreviousSession;
+
+  /// No description provided for @previousSetEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'—'**
+  String get previousSetEmpty;
+
+  /// No description provided for @addSet.
+  ///
+  /// In en, this message translates to:
+  /// **'+ Add set'**
+  String get addSet;
+
+  /// No description provided for @warmupMark.
+  ///
+  /// In en, this message translates to:
+  /// **'W'**
+  String get warmupMark;
+
+  /// No description provided for @skipRest.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get skipRest;
+
+  /// No description provided for @kgComparedWithPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'{delta} kg vs last time'**
+  String kgComparedWithPrevious(String delta);
+
+  /// No description provided for @repsComparedWithPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'{delta} reps vs last time'**
+  String repsComparedWithPrevious(String delta);
+
+  /// No description provided for @noExercisesInWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'No exercises in this workout yet.'**
+  String get noExercisesInWorkout;
+
+  /// No description provided for @addExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Add exercise'**
+  String get addExercise;
+
+  /// No description provided for @searchExercises.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name'**
+  String get searchExercises;
+
+  /// No description provided for @createExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Create exercise'**
+  String get createExercise;
+
+  /// No description provided for @exerciseNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Exercise name'**
+  String get exerciseNameLabel;
+
+  /// No description provided for @addToWorkout.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to workout'**
+  String get addToWorkout;
+
+  /// No description provided for @duplicateExerciseInGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'This exercise is already in the group.'**
+  String get duplicateExerciseInGroup;
+
+  /// No description provided for @useExistingExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Use the existing exercise'**
+  String get useExistingExercise;
+
+  /// No description provided for @customExerciseSaveFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not save the exercise. Try again.'**
+  String get customExerciseSaveFailed;
+
+  /// No description provided for @muscleGroupLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Muscle group'**
+  String get muscleGroupLabel;
+
+  /// No description provided for @inProgressBannerTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Workout in progress'**
+  String get inProgressBannerTitle;
+
+  /// No description provided for @savedSetCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 set saved} other{{count} sets saved}}'**
+  String savedSetCount(int count);
+
+  /// No description provided for @startedAtLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Started {time}'**
+  String startedAtLabel(String time);
+
+  /// No description provided for @discardSession.
+  ///
+  /// In en, this message translates to:
+  /// **'Discard'**
+  String get discardSession;
+
+  /// No description provided for @discardConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Discard workout? 1 saved set will be deleted.} other{Discard workout? {count} saved sets will be deleted.}}'**
+  String discardConfirmTitle(int count);
+
+  /// No description provided for @keepTraining.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep training'**
+  String get keepTraining;
+
+  /// No description provided for @staleWorkoutTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The workout started at {time} was not finished.'**
+  String staleWorkoutTitle(String time);
+
+  /// No description provided for @saveAsCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Save as a finished workout'**
+  String get saveAsCompleted;
 }
 
 class _AppLocalizationsDelegate

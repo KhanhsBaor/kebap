@@ -8,6 +8,8 @@ class KebapSpacing extends ThemeExtension<KebapSpacing> {
     required this.md,
     required this.lg,
     required this.xl,
+    required this.touch,
+    required this.save,
     required this.radiusControl,
     required this.radiusCard,
   });
@@ -18,6 +20,8 @@ class KebapSpacing extends ThemeExtension<KebapSpacing> {
     md: 16,
     lg: 24,
     xl: 32,
+    touch: 48,
+    save: 56,
     radiusControl: 8,
     radiusCard: 12,
   );
@@ -27,6 +31,8 @@ class KebapSpacing extends ThemeExtension<KebapSpacing> {
   final double md;
   final double lg;
   final double xl;
+  final double touch;
+  final double save;
   final double radiusControl;
   final double radiusCard;
 
@@ -37,6 +43,8 @@ class KebapSpacing extends ThemeExtension<KebapSpacing> {
     double? md,
     double? lg,
     double? xl,
+    double? touch,
+    double? save,
     double? radiusControl,
     double? radiusCard,
   }) {
@@ -46,6 +54,8 @@ class KebapSpacing extends ThemeExtension<KebapSpacing> {
       md: md ?? this.md,
       lg: lg ?? this.lg,
       xl: xl ?? this.xl,
+      touch: touch ?? this.touch,
+      save: save ?? this.save,
       radiusControl: radiusControl ?? this.radiusControl,
       radiusCard: radiusCard ?? this.radiusCard,
     );
@@ -62,6 +72,8 @@ class KebapSpacing extends ThemeExtension<KebapSpacing> {
       md: _lerp(md, other.md, t),
       lg: _lerp(lg, other.lg, t),
       xl: _lerp(xl, other.xl, t),
+      touch: _lerp(touch, other.touch, t),
+      save: _lerp(save, other.save, t),
       radiusControl: _lerp(radiusControl, other.radiusControl, t),
       radiusCard: _lerp(radiusCard, other.radiusCard, t),
     );
